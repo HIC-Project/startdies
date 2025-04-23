@@ -1,5 +1,7 @@
 import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom'
 
+import Layout from "./components/Layout";
+
 import LandingPage    from './pages/LandingPage'
 import HomePage       from './pages/HomePage'
 import AboutUsPage    from './pages/AboutUsPage'
@@ -26,32 +28,34 @@ function App() {
         <BrowserRouter>
             <Routes>
                 <Route path="/" element={<Navigate to="/landing" replace />} />
-
                 <Route path="/landing"      element={<LandingPage />} />
-                <Route path="/home"         element={<HomePage />} />
-                <Route path="/about-us"     element={<AboutUsPage />} />
-                <Route path="/contact-us"   element={<ContactUsPage />} />
-                <Route path="/donations"    element={<DonationsPage />} />
-                <Route path="/faqs"         element={<FAQsPage />} />
-                <Route path="/forgot-password" element={<ForgotPassword />} />
-                <Route path="/login"        element={<LoginPage />} />
-                <Route path="/sign-up"      element={<SignUpPage />} />
-                <Route path="/library"      element={<LibraryPage />} />
 
-                <Route path="/flashcards">
-                    <Route index element={<FlashcardHome />} />
-                    <Route path="create"  element={<FlashcardCreate />} />
-                    <Route path="example" element={<FlashcardExample />} />
-                </Route>
+                <Route element={<Layout/>}>
+                    <Route path="/home" element={<HomePage/>}/>
+                    <Route path="/about-us" element={<AboutUsPage/>}/>
+                    <Route path="/contact-us" element={<ContactUsPage/>}/>
+                    <Route path="/donations" element={<DonationsPage/>}/>
+                    <Route path="/faqs" element={<FAQsPage/>}/>
+                    <Route path="/forgot-password" element={<ForgotPassword/>}/>
+                    <Route path="/login" element={<LoginPage/>}/>
+                    <Route path="/sign-up" element={<SignUpPage/>}/>
+                    <Route path="/library" element={<LibraryPage/>}/>
 
-                <Route path="/match">
-                    <Route index element={<MatchList />} />
-                    <Route path="example" element={<MatchExample />} />
-                </Route>
+                    <Route path="/flashcards">
+                        <Route index element={<FlashcardHome/>}/>
+                        <Route path="create" element={<FlashcardCreate/>}/>
+                        <Route path="example" element={<FlashcardExample/>}/>
+                    </Route>
 
-                <Route path="/test">
-                    <Route index element={<TestList />} />
-                    <Route path="run"     element={<TestPage />} />
+                    <Route path="/match">
+                        <Route index element={<MatchList/>}/>
+                        <Route path="example" element={<MatchExample/>}/>
+                    </Route>
+
+                    <Route path="/test">
+                        <Route index element={<TestList/>}/>
+                        <Route path="run" element={<TestPage/>}/>
+                    </Route>
                 </Route>
 
                 <Route path="*" element={<div>404: Not Found</div>} />
