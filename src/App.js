@@ -1,26 +1,64 @@
-import logo from './logo.svg';
-import './App.css';
+import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom'
 
-function App()
-{
+import LandingPage    from './pages/LandingPage'
+import HomePage       from './pages/HomePage'
+import AboutUsPage    from './pages/AboutUsPage'
+import ContactUsPage  from './pages/ContactUsPage'
+import DonationsPage  from './pages/DonationsPage'
+import FAQsPage       from './pages/FAQsPage'
+import ForgotPassword from './pages/ForgotPassword'
+import LoginPage      from './pages/LoginPage'
+import SignUpPage     from './pages/SignUpPage'
+import LibraryPage    from './pages/LibraryPage'
+
+import FlashcardHome    from './pages/Flashcards/FlashcardHome'
+import FlashcardCreate  from './pages/Flashcards/FlashcardCreate'
+import FlashcardExample from './pages/Flashcards/FlashcardExample'
+
+import MatchList    from './pages/Match/MatchList'
+import MatchExample from './pages/Match/MatchExample'
+
+import TestList from './pages/Test/TestList'
+import TestPage  from './pages/Test/Test'
+
+function App() {
     return (
-        <div className="App">
-            <header className="App-header">
-                <img src={logo} className="App-logo" alt="logo"/>
-                <p>
-                    Edit <code>src/App.js</code> and save to reload.
-                </p>
-                <a
-                    className="App-link"
-                    href="https://reactjs.org"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                >
-                    Learn React
-                </a>
-            </header>
-        </div>
-    );
+        <BrowserRouter>
+            <Routes>
+                <Route path="/" element={<Navigate to="/landing" replace />} />
+
+                <Route path="/landing"      element={<LandingPage />} />
+                <Route path="/home"         element={<HomePage />} />
+                <Route path="/about-us"     element={<AboutUsPage />} />
+                <Route path="/contact-us"   element={<ContactUsPage />} />
+                <Route path="/donations"    element={<DonationsPage />} />
+                <Route path="/faqs"         element={<FAQsPage />} />
+                <Route path="/forgot-password" element={<ForgotPassword />} />
+                <Route path="/login"        element={<LoginPage />} />
+                <Route path="/sign-up"      element={<SignUpPage />} />
+                <Route path="/library"      element={<LibraryPage />} />
+
+                <Route path="/flashcards">
+                    <Route index element={<FlashcardHome />} />
+                    <Route path="create"  element={<FlashcardCreate />} />
+                    <Route path="example" element={<FlashcardExample />} />
+                </Route>
+
+                <Route path="/match">
+                    <Route index element={<MatchList />} />
+                    <Route path="example" element={<MatchExample />} />
+                </Route>
+
+                <Route path="/test">
+                    <Route index element={<TestList />} />
+                    <Route path="run"     element={<TestPage />} />
+                </Route>
+
+                <Route path="*" element={<div>404: Not Found</div>} />
+
+            </Routes>
+        </BrowserRouter>
+    )
 }
 
-export default App;
+export default App
