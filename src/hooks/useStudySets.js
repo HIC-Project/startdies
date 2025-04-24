@@ -1,11 +1,9 @@
-// src/hooks/useStudySets.js
 import { useState } from 'react';
 import { v4 as uuidv4 } from 'uuid';
 import { useAuth } from './useAuth';
 
 export default function useStudySets() {
     const { user } = useAuth();
-    // key off the username
     const storageKey = `studySets_${user?.username || 'guest'}`;
     const [sets, setSets] = useState(() => {
         const raw = localStorage.getItem(storageKey);

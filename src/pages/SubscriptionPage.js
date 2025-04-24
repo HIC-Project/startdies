@@ -1,4 +1,3 @@
-// src/pages/SubscriptionPage.js
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { useAuth } from '../hooks/useAuth';
@@ -10,7 +9,6 @@ export default function SubscriptionPage() {
     const [error, setError]   = useState('');
     const [msg, setMsg]       = useState('');
 
-    // If not logged in, prompt to sign in
     if (!user) {
         return (
             <div style={styles.container}>
@@ -33,7 +31,6 @@ export default function SubscriptionPage() {
         );
     }
 
-    // Logged-in flow
     const handleSubscribe = () => {
         try {
             subscribe();

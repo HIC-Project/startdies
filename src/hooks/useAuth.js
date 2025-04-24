@@ -1,4 +1,3 @@
-// src/hooks/useAuth.js
 import React, { createContext, useContext, useState } from 'react';
 
 const AuthContext = createContext();
@@ -15,7 +14,6 @@ export function AuthProvider({ children }) {
         if (users[username]) {
             throw new Error('Username already exists');
         }
-        // store password + default membership
         users[username] = { password, membership: 'basic' };
         localStorage.setItem('users', JSON.stringify(users));
     };
@@ -27,7 +25,6 @@ export function AuthProvider({ children }) {
         if (!record || record.password !== password) {
             throw new Error('Invalid credentials');
         }
-        // record.membership is either 'basic' or 'premium'
         const u = { username, membership: record.membership };
         localStorage.setItem('currentUser', JSON.stringify(u));
         setUser(u);
@@ -42,16 +39,13 @@ export function AuthProvider({ children }) {
         if (!user) return;
         const username = user.username;
 
-        // remove from "users"
         const raw   = localStorage.getItem('users') || '{}';
         const users = JSON.parse(raw);
         delete users[username];
         localStorage.setItem('users', JSON.stringify(users));
 
-        // remove their custom sets
         localStorage.removeItem(`studySets_${username}`);
 
-        // logout
         logout();
     };
 
@@ -59,7 +53,6 @@ export function AuthProvider({ children }) {
         if (!user) throw new Error('No user signed in');
         const username = user.username;
 
-        // update users storage
         const raw   = localStorage.getItem('users') || '{}';
         const users = JSON.parse(raw);
         const record = users[username];
@@ -68,7 +61,6 @@ export function AuthProvider({ children }) {
         users[username] = record;
         localStorage.setItem('users', JSON.stringify(users));
 
-        // update currentUser
         const u = { username, membership: 'premium' };
         localStorage.setItem('currentUser', JSON.stringify(u));
         setUser(u);
