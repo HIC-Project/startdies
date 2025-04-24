@@ -1,12 +1,23 @@
+// src/pages/MatchHome.js
 import React from 'react';
-import {Link, useNavigate} from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import useStudySets from '../../hooks/useStudySets';
-import {COLORS} from '../../themes';
+import { COLORS } from '../../themes';
 
-export default function MatchHome()
-{
-    const {sets, removeSet} = useStudySets();
-    const nav = useNavigate();
+export default function MatchHome() {
+    const { sets, removeSet } = useStudySets();
+    const navigate = useNavigate();
+
+    const formatDate = isoString => {
+        const dt = new Date(isoString);
+        return dt.toLocaleString(undefined, {
+            year:   'numeric',
+            month:  'long',
+            day:    'numeric',
+            hour:   '2-digit',
+            minute: '2-digit'
+        });
+    };
 
     return (
         <div style={styles.container}>
@@ -25,14 +36,15 @@ export default function MatchHome()
                         <td style={styles.td}>
                             <button
                                 style={styles.playBtn}
-                                onClick={() => nav(`/match/${s.id}`)}
+                                onClick={() => navigate(`/match/${s.id}`)}
                             >
-                                Play Match Set
-                            </button>
-                            {' '}
+                                Play
+                            </button>{' '}
                             {s.title}
                         </td>
-                        <td style={styles.td}>{s.dateCreated}</td>
+                        <td style={styles.td}>
+                            {formatDate(s.dateCreated)}
+                        </td>
                         <td style={styles.td}>
                             <button
                                 style={styles.deleteBtn}
@@ -46,7 +58,7 @@ export default function MatchHome()
                 </tbody>
             </table>
             <Link to="/match/create" style={styles.createBtn}>
-                Create +
+                + Create New Set
             </Link>
         </div>
     );
@@ -54,51 +66,55 @@ export default function MatchHome()
 
 const styles = {
     container: {
-        padding: '2rem',
+        padding: '2rem'
     },
     header: {
-        fontSize: '2.5rem',
-        color: COLORS.teal,
+        fontSize:     '2.5rem',
+        color:        COLORS.teal,
         marginBottom: '1rem',
-        textAlign: 'center',
+        textAlign:    'center'
     },
     table: {
-        width: '100%',
+        width:          '100%',
         borderCollapse: 'collapse',
-        marginBottom: '1.5rem',
+        marginBottom:   '1.5rem'
     },
     th: {
-        textAlign: 'left',
-        borderBottom: `2px solid ${COLORS.lightMint}`,
-        padding: '0.5rem',
+        textAlign:       'left',
+        borderBottom:    `2px solid ${COLORS.lightMint}`,
+        padding:         '0.5rem',
+        fontSize:        '1rem',
+        color:           COLORS.darkBlue
     },
     td: {
-        padding: '0.5rem',
-        borderBottom: `1px solid ${COLORS.lightMint}`,
+        padding:        '0.5rem',
+        borderBottom:   `1px solid ${COLORS.lightMint}`,
+        fontSize:       '0.95rem',
+        color:          COLORS.darkBlue
     },
     playBtn: {
-        marginRight: '0.5rem',
-        background: COLORS.darkBlue,
-        color: '#fff',
-        border: 'none',
+        marginRight:  '0.5rem',
+        background:   COLORS.darkBlue,
+        color:        '#fff',
+        border:       'none',
         borderRadius: '4px',
-        padding: '0.25rem 0.5rem',
-        cursor: 'pointer',
+        padding:      '0.25rem 0.5rem',
+        cursor:       'pointer'
     },
     deleteBtn: {
         background: 'transparent',
-        border: 'none',
-        cursor: 'pointer',
-        fontSize: '1.2rem',
+        border:     'none',
+        cursor:     'pointer',
+        fontSize:   '1.2rem'
     },
     createBtn: {
-        display: 'inline-block',
+        display:         'inline-block',
         backgroundColor: COLORS.darkBlue,
-        color: '#fff',
-        padding: '0.75rem 1.5rem',
-        borderRadius: '4px',
-        textDecoration: 'none',
-        cursor: 'pointer',
-        float: 'right',
-    },
+        color:           '#fff',
+        padding:         '0.75rem 1.5rem',
+        borderRadius:    '4px',
+        textDecoration:  'none',
+        cursor:          'pointer',
+        float:           'right'
+    }
 };

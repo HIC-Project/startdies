@@ -12,7 +12,6 @@ export default function Sidebar()
             </Link>
             <nav style={styles.nav}>
                 {[
-                    ['Sign In', '/login'],
                     ['Home', '/home'],
                     ['Subscription', '/subscription'],
                     ['Library', '/library'],
@@ -21,6 +20,7 @@ export default function Sidebar()
                     ['Match', '/match'],
                     ['About Us', '/about-us'],
                     ['FAQs', '/faqs'],
+                    ['Sign In', '/login'],
                 ].map(([label, to]) => (
                     <Link key={to} to={to} style={styles.navItem}>
                         {label}

@@ -1,29 +1,45 @@
-// src/pages/SignUpPage.js
-import React from 'react';
+import React, { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
+import { useAuth } from '../hooks/useAuth';
 import mainLogo from '../assets/mainLogo.svg';
 import { COLORS } from '../themes';
 
-function SignUpPage() {
+export default function SignUpPage() {
+    const { register } = useAuth();
     const navigate = useNavigate();
+
+    const [username, setUsername] = useState('');
+    const [password, setPassword] = useState('');
+    const [confirm, setConfirm]   = useState('');
+    const [error, setError]       = useState('');
 
     const handleSignUp = e => {
         e.preventDefault();
-        // TODO: signup backend
-        navigate('/login');
+        if (password !== confirm) {
+            setError("Passwords don't match");
+            return;
+        }
+        try {
+            register({ username, password });
+            navigate('/login');
+        } catch (err) {
+            setError(err.message);
+        }
     };
 
     return (
         <div style={styles.container}>
-            <img src={mainLogo} alt="StartDies Main Logo" style={styles.heroLogo} />
+            <img src={mainLogo} alt="StartDies Logo" style={styles.heroLogo} />
             <h1 style={styles.title}>Sign Up</h1>
+            {error && <p style={styles.error}>{error}</p>}
 
             <form style={styles.form} onSubmit={handleSignUp}>
                 <label style={styles.label}>
-                    Login
+                    Username
                     <input
                         type="text"
-                        placeholder="Enter Your Username or Email"
+                        value={username}
+                        onChange={e => setUsername(e.target.value)}
                         style={styles.input}
                         required
                     />
@@ -33,7 +49,8 @@ function SignUpPage() {
                     Password
                     <input
                         type="password"
-                        placeholder="Enter Your Password"
+                        value={password}
+                        onChange={e => setPassword(e.target.value)}
                         style={styles.input}
                         required
                     />
@@ -43,7 +60,8 @@ function SignUpPage() {
                     Confirm Password
                     <input
                         type="password"
-                        placeholder="Confirm Your Password"
+                        value={confirm}
+                        onChange={e => setConfirm(e.target.value)}
                         style={styles.input}
                         required
                     />
@@ -56,8 +74,9 @@ function SignUpPage() {
 
             <p style={styles.footer}>
                 Already have an account?{' '}
-                <Link to="/login" style={styles.link}>Sign in</Link>.{' '}
-                <Link to="/contact-us" style={styles.link}>Contact Us</Link>
+                <Link to="/login" style={styles.link}>
+                    Log in
+                </Link>
             </p>
         </div>
     );
@@ -75,9 +94,13 @@ const styles = {
         marginBottom: '1.5rem',
     },
     title: {
-        fontSize:   '2.5rem',
-        color:      COLORS.teal,
-        marginBottom: '2rem',
+        fontSize:     '2.5rem',
+        color:        COLORS.teal,
+        marginBottom: '1rem',
+    },
+    error: {
+        color:        '#e74c3c',
+        marginBottom: '1rem',
     },
     form: {
         width:        '100%',
@@ -100,7 +123,7 @@ const styles = {
         borderRadius: '4px',
     },
     submit: {
-        marginTop:     '1rem',
+        marginTop:       '1rem',
         backgroundColor: COLORS.darkBlue,
         color:           '#fff',
         fontSize:        '1.1rem',
@@ -110,7 +133,7 @@ const styles = {
         cursor:          'pointer',
     },
     footer: {
-        marginTop: '1.5rem',
+        marginTop: '1rem',
         fontSize:  '0.9rem',
         color:     COLORS.darkBlue,
     },
@@ -119,5 +142,3 @@ const styles = {
         textDecoration:  'underline',
     },
 };
-
-export default SignUpPage;
