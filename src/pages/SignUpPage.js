@@ -1,83 +1,72 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { Link, useNavigate } from 'react-router-dom';
-import { useAuth } from '../hooks/useAuth';
-import mainLogo from '../assets/mainLogo.svg';
 import { COLORS } from '../themes';
 
-export default function SignUpPage() {
-    const { register } = useAuth();
+function SignUpPage() {
     const navigate = useNavigate();
-
-    const [username, setUsername] = useState('');
-    const [password, setPassword] = useState('');
-    const [confirm, setConfirm]   = useState('');
-    const [error, setError]       = useState('');
 
     const handleSignUp = e => {
         e.preventDefault();
-        if (password !== confirm) {
-            setError("Passwords don't match");
+        const formData = new FormData(e.target);
+        const username = formData.get('username');
+        const password = formData.get('password');
+        const securityQuestion = formData.get('securityQuestion');
+        const securityAnswer = formData.get('securityAnswer');
+
+        const users = JSON.parse(localStorage.getItem('users') || '[]');
+
+        // Check if the user already exists (based on username)
+        if (users.find(u => u.username === username)) {
+            alert('User already exists');
             return;
         }
-        try {
-            register({ username, password });
-            navigate('/login');
-        } catch (err) {
-            setError(err.message);
-        }
+
+        // Add new user to localStorage
+        users.push({ username, password, securityQuestion, securityAnswer });
+        localStorage.setItem('users', JSON.stringify(users));
+
+        // Redirect to login page after signup
+        navigate('/login');
     };
 
     return (
         <div style={styles.container}>
-            <img src={mainLogo} alt="StartDies Logo" style={styles.heroLogo} />
             <h1 style={styles.title}>Sign Up</h1>
-            {error && <p style={styles.error}>{error}</p>}
-
             <form style={styles.form} onSubmit={handleSignUp}>
                 <label style={styles.label}>
                     Username
-                    <input
-                        type="text"
-                        value={username}
-                        onChange={e => setUsername(e.target.value)}
-                        style={styles.input}
-                        required
-                    />
+                    <input name="username" type="text" required style={styles.input} />
                 </label>
-
                 <label style={styles.label}>
                     Password
-                    <input
-                        type="password"
-                        value={password}
-                        onChange={e => setPassword(e.target.value)}
-                        style={styles.input}
-                        required
-                    />
+                    <input name="password" type="password" required style={styles.input} />
                 </label>
-
                 <label style={styles.label}>
-                    Confirm Password
+                    Security Question
                     <input
-                        type="password"
-                        value={confirm}
-                        onChange={e => setConfirm(e.target.value)}
-                        style={styles.input}
+                        name="securityQuestion"
+                        type="text"
                         required
+                        style={styles.input}
+                        placeholder="e.g. What’s your favorite color?"
                     />
                 </label>
-
-                <button type="submit" style={styles.submit}>
-                    Sign Up
-                </button>
+                <label style={styles.label}>
+                    Security Answer
+                    <input
+                        name="securityAnswer"
+                        type="text"
+                        required
+                        style={styles.input}
+                    />
+                </label>
+                <button type="submit" style={styles.submit}>Sign Up</button>
             </form>
-
-            <p style={styles.footer}>
-                Already have an account?{' '}
-                <Link to="/login" style={styles.link}>
-                    Log in
+            <div style={styles.footer}>
+                <Link to="/login" style={styles.loginLink}>
+                    Already have an account? Log in
                 </Link>
-            </p>
+            </div>
         </div>
     );
 }
@@ -142,3 +131,5 @@ const styles = {
         textDecoration:  'underline',
     },
 };
+
+export default SignUpPage;

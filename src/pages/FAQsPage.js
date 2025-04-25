@@ -6,7 +6,7 @@ import { COLORS } from '../themes';
 const faqs = [
     {
         question: 'How do I reset my password?',
-        answer: 'Click on "Forgot Password" at the login page and follow the instructions to reset your password via your email address.',
+        answer: 'Click on "Forgot Password" at the login page and follow the instructions to reset your password via your security question.',
     },
     {
         question: 'Can I cancel my subscription at any time?',
