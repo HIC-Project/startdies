@@ -20,24 +20,13 @@ const Test = () => {
   useEffect(() => {
     const fetchTestData = async () => {
       try {
-        const mockTest = {
-          id: parseInt(testId),
-          title: 'Biology Midterm',
-          timeLimit: 30,
-          questions: [
-            { id: 1, question: 'Which organelle is responsible for photosynthesis?', options: ['Mitochondria', 'Chloroplast', 'Nucleus', 'Endoplasmic Reticulum'], correctAnswer: 1 },
-            { id: 2, question: 'What is the primary function of DNA?', options: ['Energy production', 'Storage of genetic information', 'Protein synthesis', 'Cell movement'], correctAnswer: 1 },
-            { id: 3, question: 'Which of the following is NOT a component of blood?', options: ['Red blood cells', 'White blood cells', 'Platelets', 'Neurons'], correctAnswer: 3 },
-            { id: 4, question: 'Which system is responsible for detoxifying the body?', options: ['Respiratory system', 'Digestive system', 'Excretory system', 'Nervous system'], correctAnswer: 2 },
-            { id: 5, question: 'What is the process of breaking down glucose to release energy called?', options: ['Photosynthesis', 'Respiration', 'Fermentation', 'Digestion'], correctAnswer: 1 }
-          ]
-        };
+        const res = await fetch(`http://localhost:5050/api/tests/${testId}`);
+        const data = await res.json();
+        setTestData(data);
+        setUserAnswers(Array(data.questions.length).fill(null));
 
-        setTestData(mockTest);
-        setUserAnswers(Array(mockTest.questions.length).fill(null));
-
-        if (mockTest.timeLimit) {
-          const totalSeconds = mockTest.timeLimit * 60;
+        if (data.timeLimit) {
+          const totalSeconds = data.timeLimit * 60;
           setTimeRemaining(totalSeconds);
 
           const interval = setInterval(() => {
@@ -150,12 +139,12 @@ const Test = () => {
     return (
       <div className="container">
         <button
-            onClick={() => navigate('/test')}
-            className="backToTestListBtn"
+          onClick={() => navigate('/test')}
+          className="backToTestListBtn"
         >
-            Back to Test List
+          « Back to Test List
         </button>
-        
+
         <div className="resultCard">
           <h2 className="resultTitle">Test Complete!</h2>
 
@@ -208,12 +197,13 @@ const Test = () => {
 
   return (
     <div className="container">
-        <button
-            onClick={() => navigate('/test')}
-            className="backToTestListBtn"
-        >
-            Back to Test List
-        </button>
+      <button
+        onClick={() => navigate('/test')}
+        className="backToTestListBtn"
+      >
+        « Back to Test List
+      </button>
+
       <div className="testHeader">
         <h1 className="testTitle">{testData.title}</h1>
 

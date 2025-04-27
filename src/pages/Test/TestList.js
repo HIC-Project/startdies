@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { useAuth } from '../../hooks/useAuth';
 import './TestList.css';
 
@@ -7,17 +7,22 @@ const TestList = () => {
   const { user } = useAuth();
   const [testSets, setTestSets] = useState([]);
   const [loading, setLoading] = useState(true);
+  const navigate = useNavigate();
 
   useEffect(() => {
     const fetchTestSets = async () => {
       try {
-        const mockTestSets = [
-          { id: 1, title: 'Biology Midterm', questionsCount: 42, lastAttempt: '2025-04-22' },
-          { id: 2, title: 'Chemistry Fundamentals', questionsCount: 30, lastAttempt: '2025-04-15' },
-          { id: 3, title: 'Spanish Vocabulary', questionsCount: 50, lastAttempt: null },
-          { id: 4, title: 'World History', questionsCount: 75, lastAttempt: '2025-04-01' },
-        ];
-        setTestSets(mockTestSets);
+        const res = await fetch('http://localhost:5050/api/tests');
+        const data = await res.json();
+
+        // Add dummy "lastAttempt" field for UI consistency
+        const enrichedData = data.map(test => ({
+          ...test,
+          questionsCount: test.questions.length,
+          lastAttempt: null, // You can later save user's last attempt if needed
+        }));
+
+        setTestSets(enrichedData);
         setLoading(false);
       } catch (error) {
         console.error('Error fetching test sets:', error);
@@ -32,6 +37,10 @@ const TestList = () => {
     if (!dateString) return 'Never';
     const date = new Date(dateString);
     return date.toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' });
+  };
+
+  const handleEdit = (id) => {
+    alert(`Edit Test ID: ${id} (Feature coming soon)`);
   };
 
   return (
@@ -71,7 +80,9 @@ const TestList = () => {
                     <Link to={`/test/run?id=${test.id}`} className="takeTestBtn">
                       Take Test
                     </Link>
-                    <button className="editBtn">Edit</button>
+                    <button className="editBtn" onClick={() => handleEdit(test.id)}>
+                      Edit
+                    </button>
                   </div>
                 </div>
               ))}

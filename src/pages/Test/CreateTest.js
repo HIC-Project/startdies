@@ -79,14 +79,22 @@ const CreateTest = () => {
     }
 
     try {
-      const newTest = {
-        ...testData,
-        id: Date.now(),
-        createdAt: new Date().toISOString(),
-        createdBy: user?.username || 'Anonymous'
-      };
+      const response = await fetch('http://localhost:5050/api/tests', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          ...testData,
+          id: Date.now(),
+          createdAt: new Date().toISOString(),
+          createdBy: user?.username || 'Anonymous'
+        })
+      });
 
-      console.log('Saving test:', newTest);
+      if (!response.ok) throw new Error('Failed to create test');
+
+      const createdTest = await response.json();
+      console.log('Created test:', createdTest);
+
       alert('Test saved successfully!');
       navigate('/test');
     } catch (error) {
