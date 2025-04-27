@@ -25,6 +25,7 @@ import MatchCreate from './pages/Match/MatchCreate'
 
 import TestList from './pages/Test/TestList'
 import TestPage from './pages/Test/Test'
+import CreateTest from './pages/Test/CreateTest'
 
 function App()
 {
@@ -62,6 +63,7 @@ function App()
                         <Route path="/test">
                             <Route index element={<TestList/>}/>
                             <Route path="run" element={<TestPage/>}/>
+                            <Route path="create" element={<CreateTest/>}/>
                         </Route>
                     </Route>
 

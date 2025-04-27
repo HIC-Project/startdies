@@ -1,0 +1,109 @@
+.container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 2rem 1rem;
+  }
+  
+  .header {
+    margin-bottom: 2rem;
+    text-align: left;
+  }
+  
+  .title {
+    font-size: 2rem;
+    font-weight: 700;
+    color: #163950;
+    margin-bottom: 0.5rem;
+  }
+  
+  .subtitle {
+    font-size: 1rem;
+    color: #2A787A;
+    max-width: 600px;
+  }
+  
+  .loading {
+    padding: 2rem;
+    text-align: center;
+    color: #2A787A;
+  }
+  
+  .createNew {
+    margin-bottom: 2rem;
+    text-align: right;
+  }
+  
+  .createLink {
+    display: inline-block;
+    padding: 0.75rem 1.5rem;
+    background-color: #53CA97;
+    color: #fff;
+    border-radius: 4px;
+    text-decoration: none;
+    font-weight: 600;
+    transition: background-color 0.2s;
+  }
+  
+  .emptyState {
+    padding: 3rem;
+    text-align: center;
+    background-color: #C7F0CC;
+    border-radius: 8px;
+    color: #163950;
+  }
+  
+  .testGrid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+    gap: 1.5rem;
+  }
+  
+  .testCard {
+    background-color: #fff;
+    border-radius: 8px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+    padding: 1.5rem;
+    border: 1px solid #C7F0CC;
+  }
+  
+  .testTitle {
+    font-size: 1.25rem;
+    font-weight: 600;
+    color: #163950;
+    margin-bottom: 1rem;
+  }
+  
+  .testDetails {
+    font-size: 0.9rem;
+    color: #666;
+    margin-bottom: 1.5rem;
+  }
+  
+  .actionButtons {
+    display: flex;
+    justify-content: space-between;
+  }
+  
+  .takeTestBtn {
+    padding: 0.5rem 1rem;
+    background-color: #2A787A;
+    color: #fff;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    text-decoration: none;
+    text-align: center;
+    flex: 1;
+    margin-right: 0.5rem;
+  }
+  
+  .editBtn {
+    padding: 0.5rem 1rem;
+    background-color: transparent;
+    color: #2A787A;
+    border: 1px solid #2A787A;
+    border-radius: 4px;
+    cursor: pointer;
+    flex: 0.5;
+  }
+  

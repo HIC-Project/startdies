@@ -1,0 +1,323 @@
+.container {
+    max-width: 900px;
+    margin: 0 auto;
+    padding: 2rem 1rem;
+  }
+  
+  .header {
+    margin-bottom: 2rem;
+  }
+  
+  .title {
+    font-size: 2rem;
+    font-weight: 700;
+    color: #163950;
+    margin-bottom: 0.5rem;
+  }
+  
+  .subtitle {
+    font-size: 1rem;
+    color: #2A787A;
+  }
+  
+  .loading {
+    padding: 2rem;
+    text-align: center;
+    color: #2A787A;
+  }
+  
+  .examEditor {
+    margin-bottom: 2rem;
+  }
+  
+  .basicInfo {
+    background-color: #fff;
+    border-radius: 8px;
+    padding: 1.5rem;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+    margin-bottom: 2rem;
+  }
+  
+  .formGroup {
+    margin-bottom: 1.5rem;
+  }
+  
+  .label {
+    display: block;
+    font-size: 0.9rem;
+    font-weight: 600;
+    color: #163950;
+    margin-bottom: 0.5rem;
+  }
+  
+  .input {
+    width: 100%;
+    padding: 0.75rem;
+    border-radius: 4px;
+    border: 1px solid #ddd;
+    font-size: 1rem;
+  }
+  
+  .textarea {
+    width: 100%;
+    padding: 0.75rem;
+    border-radius: 4px;
+    border: 1px solid #ddd;
+    font-size: 1rem;
+    resize: vertical;
+  }
+  
+  .divider {
+    height: 1px;
+    background-color: #eee;
+    margin: 2rem 0;
+  }
+  
+  .flashcardSection {
+    margin-bottom: 2rem;
+  }
+  
+  .sectionTitle {
+    font-size: 1.25rem;
+    font-weight: 600;
+    color: #163950;
+    margin-bottom: 1rem;
+  }
+  
+  .sectionInfo {
+    font-size: 0.9rem;
+    color: #666;
+    margin-bottom: 1.5rem;
+  }
+  
+  .flashcardGrid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+    gap: 1rem;
+    margin-bottom: 1.5rem;
+  }
+  
+  .flashcardSet {
+    padding: 1rem;
+    background-color: #f9f9f9;
+    border-radius: 8px;
+    border: 1px solid #eee;
+    cursor: pointer;
+    transition: all 0.2s;
+  }
+  
+  .selectedFlashcardSet {
+    border-color: #53CA97;
+    background-color: #C7F0CC;
+  }
+  
+  .flashcardSetTitle {
+    font-size: 1rem;
+    font-weight: 600;
+    margin-bottom: 0.5rem;
+    color: #163950;
+  }
+  
+  .generateBtn {
+    padding: 0.75rem 1.5rem;
+    background-color: #2A787A;
+    color: #fff;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    font-weight: 600;
+  }
+  
+  .questionSection {
+    margin-bottom: 2rem;
+  }
+  
+  .questionEditor {
+    background-color: #fff;
+    border-radius: 8px;
+    padding: 1.5rem;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  }
+  
+  .optionsGroup {
+    margin-bottom: 1.5rem;
+  }
+  
+  .optionRow {
+    display: flex;
+    align-items: center;
+    margin-bottom: 0.75rem;
+  }
+  
+  .radio {
+    margin-right: 0.5rem;
+  }
+  
+  .radioLabel {
+    font-size: 0.9rem;
+    color: #163950;
+    margin-right: 1rem;
+  }
+  
+  .optionInput {
+    flex: 1;
+    padding: 0.75rem;
+    border-radius: 4px;
+    border: 1px solid #ddd;
+    font-size: 1rem;
+  }
+  
+  .addQuestionBtn {
+    padding: 0.75rem 1.5rem;
+    background-color: #53CA97;
+    color: #fff;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    font-weight: 600;
+  }
+  
+  .questionList {
+    margin-bottom: 2rem;
+  }
+  
+  .noQuestions {
+    padding: 2rem;
+    background-color: #f9f9f9;
+    border-radius: 8px;
+    text-align: center;
+    color: #666;
+  }
+  
+  .questionCards {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+  }
+  
+  .questionCard {
+    background-color: #fff;
+    border-radius: 8px;
+    padding: 1.5rem;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    border: 1px solid #eee;
+  }
+  
+  .questionNumber {
+    font-size: 0.9rem;
+    font-weight: 600;
+    color: #2A787A;
+    margin-bottom: 0.5rem;
+  }
+  
+  .questionText {
+    font-size: 1.1rem;
+    font-weight: 600;
+    color: #163950;
+    margin-bottom: 1rem;
+  }
+  
+  .questionOptions {
+    margin-bottom: 1rem;
+  }
+  
+  .questionOption {
+    padding: 0.75rem;
+    background-color: #f9f9f9;
+    border-radius: 4px;
+    margin-bottom: 0.5rem;
+    position: relative;
+  }
+  
+  .correctOption {
+    background-color: rgba(83, 202, 151, 0.1);
+    border-left: 4px solid #53CA97;
+  }
+  
+  .correctBadge {
+    position: absolute;
+    right: 10px;
+    top: 50%;
+    transform: translateY(-50%);
+    padding: 0.25rem 0.5rem;
+    background-color: #53CA97;
+    color: #fff;
+    border-radius: 4px;
+    font-size: 0.8rem;
+    font-weight: 600;
+  }
+  
+  .questionActions {
+    display: flex;
+    gap: 0.5rem;
+    justify-content: flex-end;
+  }
+  
+  .editBtn {
+    padding: 0.5rem 1rem;
+    background-color: transparent;
+    color: #2A787A;
+    border: 1px solid #2A787A;
+    border-radius: 4px;
+    cursor: pointer;
+  }
+  
+  .removeBtn {
+    padding: 0.5rem 1rem;
+    background-color: transparent;
+    color: #e74c3c;
+    border: 1px solid #e74c3c;
+    border-radius: 4px;
+    cursor: pointer;
+  }
+  
+  .previewSection {
+    background-color: #fff;
+    border-radius: 8px;
+    padding: 2rem;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+    margin-bottom: 2rem;
+  }
+  
+  .actions {
+    display: flex;
+    justify-content: space-between;
+    gap: 1rem;
+  }
+  
+  .previewBtn {
+    padding: 0.75rem 1.5rem;
+    background-color: #f5f5f5;
+    color: #163950;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    cursor: pointer;
+    font-weight: 600;
+  }
+  
+  .saveBtn {
+    padding: 0.75rem 1.5rem;
+    background-color: #53CA97;
+    color: #fff;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    font-weight: 600;
+  }
+  
+  .backToTestListBtn {
+    padding: 0.5rem 1rem;
+    background-color: #f5f5f5;
+    color: #163950;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    cursor: pointer;
+    text-decoration: none;
+    font-weight: 600;
+    display: inline-block;
+    margin-bottom: 1.5rem;
+  }
+
+  .backToTestListBtn:hover {
+    background-color: #e0e0e0;
+  }
