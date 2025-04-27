@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { useAuth } from '../../hooks/useAuth';
+import { FaEdit, FaTrash } from 'react-icons/fa'; // Importing icons from react-icons
 import './TestList.css';
 
 const TestList = () => {
@@ -10,28 +11,27 @@ const TestList = () => {
   const navigate = useNavigate();
 
   useEffect(() => {
-    const fetchTestSets = async () => {
-      try {
-        const res = await fetch('http://localhost:5050/api/tests');
-        const data = await res.json();
-
-        // Add dummy "lastAttempt" field for UI consistency
-        const enrichedData = data.map(test => ({
-          ...test,
-          questionsCount: test.questions.length,
-          lastAttempt: null, // You can later save user's last attempt if needed
-        }));
-
-        setTestSets(enrichedData);
-        setLoading(false);
-      } catch (error) {
-        console.error('Error fetching test sets:', error);
-        setLoading(false);
-      }
-    };
-
-    fetchTestSets();
+    fetchTests();
   }, [user]);
+
+  const fetchTests = async () => {
+    try {
+      const res = await fetch('http://localhost:5050/api/tests');
+      const data = await res.json();
+
+      const enrichedData = data.map(test => ({
+        ...test,
+        questionsCount: test.questions.length,
+        lastAttempt: null, // Optional: You can later store the actual last attempt date
+      }));
+
+      setTestSets(enrichedData);
+      setLoading(false);
+    } catch (error) {
+      console.error('Error fetching test sets:', error);
+      setLoading(false);
+    }
+  };
 
   const formatDate = (dateString) => {
     if (!dateString) return 'Never';
@@ -41,6 +41,24 @@ const TestList = () => {
 
   const handleEdit = (id) => {
     alert(`Edit Test ID: ${id} (Feature coming soon)`);
+  };
+
+  const handleDelete = async (id) => {
+    const confirmDelete = window.confirm('Are you sure you want to delete this test?');
+    if (!confirmDelete) return;
+
+    try {
+      await fetch(`http://localhost:5050/api/tests/${id}`, {
+        method: 'DELETE',
+      });
+
+      // Refresh the list after deletion
+      fetchTests();
+      alert('Test deleted successfully!');
+    } catch (error) {
+      console.error('Error deleting test:', error);
+      alert('Failed to delete test.');
+    }
   };
 
   return (
@@ -81,7 +99,10 @@ const TestList = () => {
                       Take Test
                     </Link>
                     <button className="editBtn" onClick={() => handleEdit(test.id)}>
-                      Edit
+                      <FaEdit size={16} />
+                    </button>
+                    <button className="removeBtn" onClick={() => handleDelete(test.id)}>
+                      <FaTrash size={16} />
                     </button>
                   </div>
                 </div>
