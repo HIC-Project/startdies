@@ -5,7 +5,7 @@ import { COLORS } from '../../themes';
 import useFlashcardsSets from '../../hooks/useFlashcardsSets';
 
 export default function FlashcardsHome() {
-    const { sets, removeSet } = useFlashcardsSets();
+    const { flashcardSets, removeFlashcardSet,  } = useFlashcardsSets();
     const navigate = useNavigate();
 
     const formatDate = isoString => {
@@ -35,7 +35,7 @@ export default function FlashcardsHome() {
                 </tr>
                 </thead>
                 <tbody>
-                {sets.map(s => (
+                {flashcardSets.map(s => (
                     <tr key={s.id}>
                         <td style={styles.td}>
                             <button
@@ -55,7 +55,7 @@ export default function FlashcardsHome() {
                         <td style={styles.td}>
                             <button
                                 style={styles.deleteBtn}
-                                onClick={() => removeSet(s.id)}
+                                onClick={() => removeFlashcardSet(s.id)}
                             >
                                 🗑️
                             </button>
