@@ -56,19 +56,19 @@ app.post('/api/tests', (req, res) => {
 
 // Update a test
 app.put('/api/tests/:id', (req, res) => {
-  const tests = readTests();
-  const testId = parseInt(req.params.id);
-  const updatedTest = req.body;
-
-  const index = tests.findIndex(t => t.id === testId);
-  if (index === -1) {
-    return res.status(404).json({ message: 'Test not found' });
-  }
-
-  tests[index] = { ...tests[index], ...updatedTest };
-  saveTests(tests);
-  res.json(tests[index]);
-});
+    const tests = readTests();
+    const testId = parseInt(req.params.id);
+    const updatedTest = req.body;
+  
+    const index = tests.findIndex(t => t.id === testId);
+    if (index === -1) {
+      return res.status(404).json({ message: 'Test not found' });
+    }
+  
+    tests[index] = { ...tests[index], ...updatedTest };
+    saveTests(tests);
+    res.json(tests[index]);
+  });
 
 // Delete a test
 app.delete('/api/tests/:id', (req, res) => {

@@ -40,7 +40,7 @@ const TestList = () => {
   };
 
   const handleEdit = (id) => {
-    alert(`Edit Test ID: ${id} (Feature coming soon)`);
+    navigate(`/test/update/${id}`); // Navigate to the update page with the testId
   };
 
   const handleDelete = async (id) => {
@@ -99,10 +99,10 @@ const TestList = () => {
                       Take Test
                     </Link>
                     <button className="editBtn" onClick={() => handleEdit(test.id)}>
-                      <FaEdit size={16} />
+                      <FaEdit size={16} style={{ marginRight: 4 }} />
                     </button>
                     <button className="removeBtn" onClick={() => handleDelete(test.id)}>
-                      <FaTrash size={16} />
+                      <FaTrash size={16} style={{ marginRight: 4 }} />
                     </button>
                   </div>
                 </div>
