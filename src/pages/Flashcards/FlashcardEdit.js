@@ -7,7 +7,7 @@ import useFlashcardsSets from '../../hooks/useFlashcardsSets';
 export default function FlashcardEdit() {
 
     const { id } = useParams();
-    const { sets, editSet } = useFlashcardsSets();
+    const { flashcardSets, editFlashcardSet  } = useFlashcardsSets();
     const navigate = useNavigate();
 
     const [title, setTitle] = useState('');
@@ -15,7 +15,7 @@ export default function FlashcardEdit() {
     const [pairs, setPairs] = useState([{ term: '', def: '' }]);
 
     useEffect(() => {
-        const currentSet = sets.find(set => set.id === id);
+        const currentSet = flashcardSets.find(set => set.id === id);
         if (currentSet) {
             setTitle(currentSet.title);
             setDescription(currentSet.description);
@@ -23,7 +23,7 @@ export default function FlashcardEdit() {
         } else {
             navigate('/flashcards');
         }
-    }, [id, sets, navigate]);
+    }, [id, flashcardSets, navigate]);
 
     const updatePair = (idx, field, value) => {
         const copy = [...pairs];
@@ -40,7 +40,7 @@ export default function FlashcardEdit() {
     const handleSubmit = e => 
     {
         e.preventDefault();
-        editSet(id, title, description, pairs);
+        editFlashcardSet(id, title, description, pairs);
         navigate('/flashcards');
     };
 
