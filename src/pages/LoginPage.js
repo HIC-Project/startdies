@@ -57,7 +57,7 @@ export default function LoginPage() {
             </form>
             {/* Forgot Password link */}
             <div style={styles.footer}>
-                <Link to="/forgot-password" style={styles.forgot}>
+                <Link to="/forgot-password" style={styles.forgotPassword}>
                     Forgot your password?
                 </Link>
 
