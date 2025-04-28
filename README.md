@@ -25,15 +25,28 @@ StartDies is a modern educational study application designed to help learners of
 
    ```bash
    npm install
+   npm install bootstrap
+   npm install express
    ```
 
 3. **Start the development server**
+ 
+   ```bash
+   #terminal 1:
+   node sever.js
+   ```
 
    ```bash
+   #terminal 2:
    npm start
    ```
 
-4. **Build for production**
+4. **Access the application**
+
+   Frontend: [http://localhost:3000](http://localhost:3000)  
+   Backend: [http://localhost:5050](http://localhost:5050)
+   
+6. **Build for production**
 
    ```bash
    npm run build
