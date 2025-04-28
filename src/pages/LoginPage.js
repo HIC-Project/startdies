@@ -56,11 +56,10 @@ export default function LoginPage() {
                 </button>
             </form>
             {/* Forgot Password link */}
-<p style={styles.forgotPassword}>
-    <Link to="/forgot-password" style={styles.link}>
-        Forgot Password?
-    </Link>
-</p>
+            <div style={styles.footer}>
+                <Link to="/forgot-password" style={styles.forgot}>
+                    Forgot your password?
+                </Link>
 
             <p style={styles.footer}>
                 Don’t have an account?{' '}
