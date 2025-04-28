@@ -23,6 +23,7 @@ import FlashcardEdit from './pages/Flashcards/FlashcardEdit';
 import MatchHome from './pages/Match/MatchHome';
 import MatchExample from './pages/Match/MatchExample';
 import MatchCreate from './pages/Match/MatchCreate';
+import MatchEdit from './pages/Match/MatchEdit';
 
 import TestList from './pages/Test/TestList';
 import TestPage from './pages/Test/Test';
@@ -62,6 +63,7 @@ function App() {
                 <Route index element={<MatchHome />} />
                 <Route path="/match/create" element={<MatchCreate />} />
                 <Route path="/match/:id" element={<MatchExample />} />
+                <Route path="/match/edit/:id" element={<MatchEdit />} />
             </Route>
 
             {/* Tests */}

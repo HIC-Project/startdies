@@ -1,3 +1,4 @@
+// src/hooks/useStudySets.js
 import { useState } from 'react';
 import { v4 as uuidv4 } from 'uuid';
 import { useAuth } from './useAuth';
@@ -25,9 +26,17 @@ export default function useStudySets() {
         persist([...sets, newSet]);
     }
 
+    function updateSet(id, { title, pairs }) {
+        persist(sets.map(set => 
+            set.id === id 
+                ? { ...set, title, pairs }
+                : set
+        ));
+    }
+
     function removeSet(id) {
         persist(sets.filter(s => s.id !== id));
     }
 
-    return { sets, addSet, removeSet };
+    return { sets, addSet, updateSet, removeSet };
 }

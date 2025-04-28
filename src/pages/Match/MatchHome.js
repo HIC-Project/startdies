@@ -47,6 +47,12 @@ export default function MatchHome() {
                         </td>
                         <td style={styles.td}>
                             <button
+                                style={styles.editBtn}
+                                onClick={() => navigate(`/match/edit/${s.id}`)}
+                            >
+                                ✏️
+                            </button>{' '}
+                            <button
                                 style={styles.deleteBtn}
                                 onClick={() => removeSet(s.id)}
                             >
@@ -100,6 +106,13 @@ const styles = {
         borderRadius: '4px',
         padding:      '0.25rem 0.5rem',
         cursor:       'pointer'
+    },
+    editBtn: {
+        marginRight:  '0.5rem',
+        background:   'transparent',
+        border:       'none',
+        cursor:       'pointer',
+        fontSize:     '1.2rem'
     },
     deleteBtn: {
         background: 'transparent',
