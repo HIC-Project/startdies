@@ -10,7 +10,7 @@ export default function LoginPage() {
 
     const [username, setUsername] = useState('');
     const [password, setPassword] = useState('');
-    const [error, setError]       = useState('');
+    const [error, setError] = useState('');
 
     const handleLogin = e => {
         e.preventDefault();
@@ -55,32 +55,34 @@ export default function LoginPage() {
                     Log In
                 </button>
             </form>
-            {/* Forgot Password link */}
+            
             <div style={styles.footer}>
                 <Link to="/forgot-password" style={styles.forgotPassword}>
                     Forgot your password?
                 </Link>
 
-            <p style={styles.footer}>
-                Don’t have an account?{' '}
-                <Link to="/sign-up" style={styles.link}>
-                    Sign Up
-                </Link>.
-            </p>
+                <p style={styles.footerText}>
+                    Don't have an account?{' '}
+                    <Link to="/sign-up" style={styles.link}>
+                        Sign Up
+                    </Link>
+                </p>
+            </div>
         </div>
     );
 }
 
 const styles = {
-    container:       { display:'flex', flexDirection:'column', alignItems:'center', padding:'2rem 1rem' },
-    heroLogo:        { width:'300px', marginBottom:'1.5rem' },
-    title:           { fontSize:'2.5rem', color:COLORS.teal, marginBottom:'1rem' },
-    error:           { color:'#e74c3c', marginBottom:'1rem' },
-    form:            { width:'100%', maxWidth:'400px', display:'flex', flexDirection:'column', gap:'1rem' },
-    label:           { display:'flex', flexDirection:'column', fontSize:'1rem', color:COLORS.darkBlue },
-    input:           { marginTop:'0.5rem', padding:'0.5rem', fontSize:'1rem', border:`1px solid ${COLORS.lightMint}`, borderRadius:'4px' },
-    submit:          { marginTop:'1rem', backgroundColor:COLORS.darkBlue, color:'#fff', fontSize:'1.1rem', padding:'0.75rem', border:'none', borderRadius:'4px', cursor:'pointer' },
-    footer:          { marginTop:'1rem', fontSize:'0.9rem', color:COLORS.darkBlue },
-    link:            { color:COLORS.teal, textDecoration:'underline' },
-    forgotPassword: { marginTop:'0.5rem', fontSize:'0.9rem', color:COLORS.darkBlue },
+    container:      { display:'flex', flexDirection:'column', alignItems:'center', padding:'2rem 1rem' },
+    heroLogo:       { width:'300px', marginBottom:'1.5rem' },
+    title:          { fontSize:'2.5rem', color:COLORS.teal, marginBottom:'1rem' },
+    error:          { color:'#e74c3c', marginBottom:'1rem' },
+    form:           { width:'100%', maxWidth:'400px', display:'flex', flexDirection:'column', gap:'1rem' },
+    label:          { display:'flex', flexDirection:'column', fontSize:'1rem', color:COLORS.darkBlue },
+    input:          { marginTop:'0.5rem', padding:'0.5rem', fontSize:'1rem', border:`1px solid ${COLORS.lightMint}`, borderRadius:'4px' },
+    submit:         { marginTop:'1rem', backgroundColor:COLORS.darkBlue, color:'#fff', fontSize:'1.1rem', padding:'0.75rem', border:'none', borderRadius:'4px', cursor:'pointer' },
+    footer:         { marginTop:'1rem', width:'100%', maxWidth:'400px', display:'flex', flexDirection:'column', alignItems:'center' },
+    footerText:     { fontSize:'0.9rem', color:COLORS.darkBlue, marginTop:'0.5rem' },
+    link:           { color:COLORS.teal, textDecoration:'underline' },
+    forgotPassword: { fontSize:'0.9rem', color:COLORS.darkBlue },
 };
