@@ -18,14 +18,18 @@ export default function AboutUsPage() {
                 <section style={styles.panel}>
                     <h2 style={styles.panelTitle}>Our Mission</h2>
                     <p style={styles.panelText}>
-                        Our Mission stuff will go here
+                    As a group of college students, we care about studying and staying organized academically. Our goal is to make studying easier, more efficient, and more interactive for students everywhere. We are here to create a platform that helps students learn through digital tools, and study aids.
+We aim to provide customizable flashcards, study games, and resources that allow students to personalize their learning experience. Our goal is to bridge the gap between traditional studying and modern, tech-driven approaches to education. We believe that learning should be accessible, fun, and effective, no matter where you are in your academic journey.
+
+
                     </p>
                 </section>
 
                 <section style={styles.panel}>
                     <h2 style={styles.panelTitle}>Our Journey</h2>
                     <p style={styles.panelText}>
-                        Our Journey stuff will go right here
+                        We came to gether as a team of college students to complege this project and make a fun and fuctional tool. We all worked together to make this project possible. Our member are Chotanansub Sophaken, Annika Hall, Abdulaziz Almusaiteer, Kent Ogasawara, and Andrew Leonard. The project was made in collaboration for CS 32301 Human Interface Computing, Spring 2025.
+
                     </p>
                 </section>
             </div>

@@ -41,8 +41,8 @@ function App() {
           <Route element={<Layout />}>
             {/* Main pages */}
             <Route path="/home" element={<HomePage />} />
-            <Route path="/about" element={<AboutUsPage />} />
-            <Route path="/contact" element={<ContactUsPage />} />
+            <Route path="/about-us" element={<AboutUsPage />} />
+            <Route path="/contact-us" element={<ContactUsPage />} />
             <Route path="/donations" element={<DonationsPage />} />
             <Route path="/faqs" element={<FAQsPage />} />
             <Route path="/subscriptions" element={<Subscriptions />} />
@@ -57,9 +57,9 @@ function App() {
 
             {/* Match */}
             <Route path="/match">
-              <Route index element={<MatchHome />} />
-              <Route path="create" element={<MatchCreate />} />
-              <Route path="example" element={<MatchExample />} />
+                <Route index element={<MatchHome />} />
+                <Route path="/match/create" element={<MatchCreate />} />
+                <Route path="/match/:id" element={<MatchExample />} />
             </Route>
 
             {/* Tests */}
