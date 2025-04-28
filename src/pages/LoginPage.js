@@ -16,7 +16,7 @@ export default function LoginPage() {
         e.preventDefault();
         try {
             login({ username, password });
-            navigate('/match');  // or wherever you want them to land
+            navigate('/home');  // or wherever you want them to land
         } catch (err) {
             setError(err.message);
         }
