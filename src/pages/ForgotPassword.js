@@ -1,54 +1,122 @@
 import React, { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, Link } from 'react-router-dom';
 import { COLORS } from '../themes';
+import { FiArrowLeft } from 'react-icons/fi';
 
 function ForgotPassword() {
     const [step, setStep] = useState(1);
     const [user, setUser] = useState(null);
     const [answer, setAnswer] = useState('');
     const [newPassword, setNewPassword] = useState('');
+    const [error, setError] = useState('');
     const navigate = useNavigate();
 
     const handleUsernameSubmit = e => {
         e.preventDefault();
+        setError('');
         const formData = new FormData(e.target);
         const username = formData.get('username');
 
-        const users = JSON.parse(localStorage.getItem('users') || '[]');
-        const foundUser = users.find(u => u.username === username);
+        try {
+            // Make sure users is always an array
+            const storedData = localStorage.getItem('users');
+            if (!storedData) {
+                setError('User not found');
+                return;
+            }
+            
+            let users;
+            try {
+                users = JSON.parse(storedData);
+                // Check if users is an array
+                if (!Array.isArray(users)) {
+                    setError('Invalid user data format');
+                    return;
+                }
+            } catch (error) {
+                setError('Error retrieving user data');
+                return;
+            }
 
-        if (foundUser) {
-            setUser(foundUser);
-            setStep(2);
-        } else {
-            alert('User not found');
+            const foundUser = users.find(u => u.username === username);
+
+            if (foundUser) {
+                setUser(foundUser);
+                setStep(2);
+            } else {
+                setError('User not found');
+            }
+        } catch (error) {
+            console.error('Error in handleUsernameSubmit:', error);
+            setError('An error occurred while processing your request');
         }
     };
 
     const handleAnswerSubmit = e => {
         e.preventDefault();
-        if (answer.toLowerCase() === user.securityAnswer.toLowerCase()) {
-            setStep(3);
-        } else {
-            alert('Incorrect answer');
+        setError('');
+        
+        try {
+            if (answer.toLowerCase() === user.securityAnswer.toLowerCase()) {
+                setStep(3);
+            } else {
+                setError('Incorrect answer');
+            }
+        } catch (error) {
+            console.error('Error in handleAnswerSubmit:', error);
+            setError('An error occurred while verifying your answer');
         }
     };
 
     const handlePasswordReset = e => {
         e.preventDefault();
-        const users = JSON.parse(localStorage.getItem('users') || '[]');
-        const index = users.findIndex(u => u.username === user.username);
-        if (index !== -1) {
-            users[index].password = newPassword;
-            localStorage.setItem('users', JSON.stringify(users));
-            alert('Password updated! You can now log in.');
-            navigate('/login');
+        setError('');
+        
+        try {
+            const storedData = localStorage.getItem('users');
+            if (!storedData) {
+                setError('User data not found');
+                return;
+            }
+            
+            let users;
+            try {
+                users = JSON.parse(storedData);
+                if (!Array.isArray(users)) {
+                    setError('Invalid user data format');
+                    return;
+                }
+            } catch (error) {
+                setError('Error retrieving user data');
+                return;
+            }
+
+            const index = users.findIndex(u => u.username === user.username);
+            if (index !== -1) {
+                users[index].password = newPassword;
+                localStorage.setItem('users', JSON.stringify(users));
+                alert('Password updated! You can now log in.');
+                navigate('/login');
+            } else {
+                setError('User no longer exists');
+            }
+        } catch (error) {
+            console.error('Error in handlePasswordReset:', error);
+            setError('An error occurred while resetting your password');
         }
     };
 
     return (
         <div style={styles.container}>
-            <h1 style={styles.title}>Forgot Password</h1>
+            <div style={styles.titleContainer}>
+                <Link to="/login" style={styles.backButton}>
+                    <FiArrowLeft size={18} />
+                    <span>Back to Login</span>
+                </Link>
+                <h1 style={styles.title}>Forgot Password</h1>
+            </div>
+
+            {error && <div style={styles.error}>{error}</div>}
 
             {step === 1 && (
                 <form style={styles.form} onSubmit={handleUsernameSubmit}>
@@ -60,7 +128,7 @@ function ForgotPassword() {
                 </form>
             )}
 
-            {step === 2 && (
+            {step === 2 && user && (
                 <form style={styles.form} onSubmit={handleAnswerSubmit}>
                     <label style={styles.label}>
                         {user.securityQuestion}
@@ -101,13 +169,35 @@ const styles = {
         display: 'flex',
         flexDirection: 'column',
         alignItems: 'center',
-        padding: '4rem 1rem 2rem',
+        padding: '2rem 1rem',
         color: COLORS.darkBlue
     },
+    titleContainer: {
+        display: 'flex',
+        alignItems: 'center',
+        position: 'relative',
+        width: '100%',
+        maxWidth: '400px',
+        marginBottom: '1.5rem'
+    },
+    backButton: {
+        display: 'flex',
+        alignItems: 'center',
+        gap: '0.5rem',
+        backgroundColor: 'transparent',
+        border: 'none',
+        color: COLORS.darkBlue,
+        padding: '0.5rem',
+        borderRadius: '4px',
+        cursor: 'pointer',
+        textDecoration: 'none',
+        position: 'absolute',
+        left: 0
+    },
     title: {
-        fontSize: '2.5rem',
+        fontSize: '2rem',
         color: COLORS.teal,
-        marginBottom: '1rem'
+        margin: '0 auto'
     },
     form: {
         width: '100%',
@@ -122,14 +212,30 @@ const styles = {
     },
     input: {
         marginTop: '0.5rem',
-        padding: '0.5rem',
-        fontSize: '1rem'
+        padding: '0.75rem',
+        fontSize: '1rem',
+        border: `1px solid ${COLORS.lightMint}`,
+        borderRadius: '4px'
     },
     submit: {
         backgroundColor: COLORS.darkBlue,
         color: '#fff',
         padding: '0.75rem',
-        border: 'none'
+        border: 'none',
+        borderRadius: '4px',
+        cursor: 'pointer',
+        fontSize: '1rem',
+        marginTop: '0.5rem'
+    },
+    error: {
+        backgroundColor: '#ffebee',
+        color: '#c62828',
+        padding: '0.75rem',
+        borderRadius: '4px',
+        marginBottom: '1rem',
+        width: '100%',
+        maxWidth: '400px',
+        textAlign: 'center'
     }
 };
 

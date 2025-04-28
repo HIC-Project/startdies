@@ -39,6 +39,25 @@ const HomePage = () => {
     fetchUserData();
   }, [user]);
 
+  // Get username from sessionStorage if available
+  const getUsername = () => {
+    if (user && user.username) {
+      return user.username;
+    }
+    
+    // Try to get from sessionStorage as fallback
+    try {
+      const currentUser = JSON.parse(sessionStorage.getItem('currentUser'));
+      if (currentUser && currentUser.username) {
+        return currentUser.username;
+      }
+    } catch (error) {
+      console.error('Error getting username from session:', error);
+    }
+    
+    return 'Student';
+  };
+
   return (
     <div className="home-container">
       {loading ? (
@@ -50,7 +69,7 @@ const HomePage = () => {
               <div className="welcome-icon">👋</div>
               <div className="welcome-text">
                 <h1 className="welcome-heading">
-                  Welcome, {user ? user.username : 'Johndoe'}!
+                  Welcome, {getUsername()}!
                 </h1>
                 <p className="welcome-subheading">
                   You're on a roll! Jump back in, or start something new

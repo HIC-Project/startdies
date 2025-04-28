@@ -1,80 +1,78 @@
-import React, { createContext, useContext, useState } from 'react';
+import { useState, useEffect, createContext, useContext } from 'react';
 
-const AuthContext = createContext();
+// Create auth context
+const AuthContext = createContext(null);
 
+// Auth provider component
 export function AuthProvider({ children }) {
-    const [user, setUser] = useState(() => {
-        const stored = localStorage.getItem('currentUser');
-        return stored ? JSON.parse(stored) : null;
-    });
+  const [user, setUser] = useState(null);
 
-    const register = ({ username, password }) => {
-        const raw   = localStorage.getItem('users') || '{}';
-        const users = JSON.parse(raw);
-        if (users[username]) {
-            throw new Error('Username already exists');
-        }
-        users[username] = { password, membership: 'basic' };
-        localStorage.setItem('users', JSON.stringify(users));
-    };
+  // Check for existing user session on mount
+  useEffect(() => {
+    try {
+      const currentUser = JSON.parse(sessionStorage.getItem('currentUser'));
+      if (currentUser) {
+        setUser(currentUser);
+      }
+    } catch (error) {
+      console.error('Error loading user session:', error);
+      sessionStorage.removeItem('currentUser');
+    }
+  }, []);
 
-    const login = ({ username, password }) => {
-        const raw   = localStorage.getItem('users') || '{}';
-        const users = JSON.parse(raw);
-        const record = users[username];
-        if (!record || record.password !== password) {
-            throw new Error('Invalid credentials');
-        }
-        const u = { username, membership: record.membership };
-        localStorage.setItem('currentUser', JSON.stringify(u));
-        setUser(u);
-    };
+  // Login function
+  const login = (userData) => {
+    setUser(userData);
+    sessionStorage.setItem('currentUser', JSON.stringify(userData));
+  };
 
-    const logout = () => {
-        localStorage.removeItem('currentUser');
-        setUser(null);
-    };
+  // Logout function
+  const logout = () => {
+    setUser(null);
+    sessionStorage.removeItem('currentUser');
+  };
 
-    const deleteAccount = () => {
-        if (!user) return;
-        const username = user.username;
+  // Delete account function
+  const deleteAccount = () => {
+    if (!user) return;
 
-        const raw   = localStorage.getItem('users') || '{}';
-        const users = JSON.parse(raw);
-        delete users[username];
-        localStorage.setItem('users', JSON.stringify(users));
+    try {
+      // Get users from localStorage
+      const storedData = localStorage.getItem('users');
+      if (!storedData) return;
 
-        localStorage.removeItem(`studySets_${username}`);
+      const users = JSON.parse(storedData);
+      if (!Array.isArray(users)) return;
 
-        logout();
-    };
+      // Find and remove the current user
+      const updatedUsers = users.filter(u => u.username !== user.username);
+      
+      // Update localStorage
+      localStorage.setItem('users', JSON.stringify(updatedUsers));
+      
+      // Clear the session
+      setUser(null);
+      sessionStorage.removeItem('currentUser');
+    } catch (error) {
+      console.error('Error deleting account:', error);
+    }
+  };
 
-    const subscribe = () => {
-        if (!user) throw new Error('No user signed in');
-        const username = user.username;
-
-        const raw   = localStorage.getItem('users') || '{}';
-        const users = JSON.parse(raw);
-        const record = users[username];
-        if (!record) throw new Error('User record missing');
-        record.membership = 'premium';
-        users[username] = record;
-        localStorage.setItem('users', JSON.stringify(users));
-
-        const u = { username, membership: 'premium' };
-        localStorage.setItem('currentUser', JSON.stringify(u));
-        setUser(u);
-    };
-
-    return (
-        <AuthContext.Provider
-            value={{ user, register, login, logout, deleteAccount, subscribe }}
-        >
-            {children}
-        </AuthContext.Provider>
-    );
+  // Provide auth context
+  return (
+    <AuthContext.Provider value={{ user, login, logout, deleteAccount }}>
+      {children}
+    </AuthContext.Provider>
+  );
 }
 
+// Custom hook to use auth context
 export function useAuth() {
-    return useContext(AuthContext);
+  const context = useContext(AuthContext);
+  
+  if (!context) {
+    throw new Error('useAuth must be used within an AuthProvider');
+  }
+  
+  return context;
 }
