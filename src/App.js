@@ -29,27 +29,59 @@ import CreateTest from './pages/Test/CreateTest';
 import UpdateTest from './pages/Test/UpdateTest';
 
 function App() {
-    return (
-      <AuthProvider>
-        <BrowserRouter>
-          <Routes>
-            <Route path="/" element={<Navigate to="/landing" replace />} />
-            <Route path="/landing" element={<LandingPage />} />
-            <Route element={<Layout />}>
-              <Route path="/home" element={<HomePage />} />
-              {/* Other routes */}
-              <Route path="/test">
-                <Route index element={<TestList />} />
-                <Route path="run" element={<TestPage />} />
-                <Route path="create" element={<CreateTest />} />
-                <Route path="update/:testId" element={<UpdateTest />} /> {/* Add this route */}
-              </Route>
+  return (
+    <AuthProvider>
+      <BrowserRouter>
+        <Routes>
+          {/* Redirect root to landing */}
+          <Route path="/" element={<Navigate to="/landing" replace />} />
+          <Route path="/landing" element={<LandingPage />} />
+          
+          {/* Main layout */}
+          <Route element={<Layout />}>
+            {/* Main pages */}
+            <Route path="/home" element={<HomePage />} />
+            <Route path="/about" element={<AboutUsPage />} />
+            <Route path="/contact" element={<ContactUsPage />} />
+            <Route path="/donations" element={<DonationsPage />} />
+            <Route path="/faqs" element={<FAQsPage />} />
+            <Route path="/subscriptions" element={<Subscriptions />} />
+            <Route path="/library" element={<LibraryPage />} />
+
+            {/* Flashcards */}
+            <Route path="/flashcards">
+              <Route index element={<FlashcardHome />} />
+              <Route path="create" element={<FlashcardCreate />} />
+              <Route path="example" element={<FlashcardExample />} />
             </Route>
-            <Route path="*" element={<div>404: Not Found</div>} />
-          </Routes>
-        </BrowserRouter>
-      </AuthProvider>
-    );
-  }
-  
-  export default App;
+
+            {/* Match */}
+            <Route path="/match">
+              <Route index element={<MatchHome />} />
+              <Route path="create" element={<MatchCreate />} />
+              <Route path="example" element={<MatchExample />} />
+            </Route>
+
+            {/* Tests */}
+            <Route path="/test">
+              <Route index element={<TestList />} />
+              <Route path="run" element={<TestPage />} />
+              <Route path="create" element={<CreateTest />} />
+              <Route path="update/:testId" element={<UpdateTest />} />
+            </Route>
+          </Route>
+
+          {/* Auth pages */}
+          <Route path="/login" element={<LoginPage />} />
+          <Route path="/sign-up" element={<SignUpPage />} />
+          <Route path="/forgot-password" element={<ForgotPassword />} />
+
+          {/* 404 fallback */}
+          <Route path="*" element={<div style={{ textAlign: 'center', padding: '2rem' }}>404: Page Not Found</div>} />
+        </Routes>
+      </BrowserRouter>
+    </AuthProvider>
+  );
+}
+
+export default App;
