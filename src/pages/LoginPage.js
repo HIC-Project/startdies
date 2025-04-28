@@ -16,7 +16,7 @@ export default function LoginPage() {
         e.preventDefault();
         try {
             login({ username, password });
-            navigate('/home');  // or wherever you want them to land
+            navigate('/home');
         } catch (err) {
             setError(err.message);
         }
@@ -55,6 +55,12 @@ export default function LoginPage() {
                     Log In
                 </button>
             </form>
+            {/* Forgot Password link */}
+<p style={styles.forgotPassword}>
+    <Link to="/forgot-password" style={styles.link}>
+        Forgot Password?
+    </Link>
+</p>
 
             <p style={styles.footer}>
                 Don’t have an account?{' '}
@@ -77,4 +83,5 @@ const styles = {
     submit:          { marginTop:'1rem', backgroundColor:COLORS.darkBlue, color:'#fff', fontSize:'1.1rem', padding:'0.75rem', border:'none', borderRadius:'4px', cursor:'pointer' },
     footer:          { marginTop:'1rem', fontSize:'0.9rem', color:COLORS.darkBlue },
     link:            { color:COLORS.teal, textDecoration:'underline' },
+    forgotPassword: { marginTop:'0.5rem', fontSize:'0.9rem', color:COLORS.darkBlue },
 };
