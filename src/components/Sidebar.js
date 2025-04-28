@@ -1,7 +1,7 @@
 import React from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import logo from '../assets/logo.svg';
-import { COLORS } from '../themes';
+
 // Import React Icons
 import { 
   FaHome, 
@@ -18,7 +18,7 @@ import {
 // Navigation items
 const NAVIGATION_ITEMS = [
   { label: 'Home', path: '/home', icon: <FaHome size={18} /> },
-  { label: 'Subscription', path: '/subscription', icon: <FaCreditCard size={18} /> },
+  { label: 'Donations', path: '/donations', icon: <FaCreditCard size={18} /> },
   { label: 'Library', path: '/library', icon: <FaBook size={18} /> },
   { label: 'Flashcards', path: '/flashcards', icon: <FaStickyNote size={18} /> },
   { label: 'Test', path: '/test', icon: <FaPencilAlt size={18} /> },
