@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState , useEffect} from 'react';
 import { useNavigate } from 'react-router-dom';
 import { COLORS } from '../themes';
 import useFlashcardsSets from '../hooks/useFlashcardsSets';
@@ -7,6 +7,8 @@ import useStudySets from '../hooks/useStudySets';
 export default function LibraryPage() {
   const { flashcardSets, removeFlashcardSet } = useFlashcardsSets();
   const { sets, removeSet } = useStudySets();
+  const [tests, setTests] = useState([]);
+  const [filteredTests, setFilteredTests] = useState([]);
   const navigate = useNavigate();
   const [searchTerm, setSearchTerm] = useState('');
   
@@ -21,13 +23,11 @@ export default function LibraryPage() {
     });
   };
 
-  // Filter flashcard sets based on search term
   const filteredFlashcardSets = flashcardSets.filter(set => 
     set.title.toLowerCase().includes(searchTerm.toLowerCase()) || 
     (set.description && set.description.toLowerCase().includes(searchTerm.toLowerCase()))
   );
 
-  // Filter match sets based on search term
   const filteredMatchSets = sets.filter(set => 
     set.title.toLowerCase().includes(searchTerm.toLowerCase())
   );
@@ -44,7 +44,56 @@ export default function LibraryPage() {
     }
   };
 
-
+  const handleDeleteTest = async (id, title) => {
+    if (window.confirm(`Are you sure you want to delete "${title}"?`)) {
+      try {
+        const response = await fetch(`http://localhost:5050/api/tests/${id}`, {
+          method: 'DELETE',
+        });
+        
+        if (response.ok) {
+          fetchTests(); // Refresh the list after deletion
+        } else {
+          console.error('Error deleting test:', response.statusText);
+        }
+      } catch (error) {
+        console.error('Error deleting test:', error);
+      }
+    }
+  };
+  
+  const fetchTests = async () => {
+    try {
+      // Using your existing GET endpoint from server.js
+      const response = await fetch('http://localhost:5050/api/tests');
+      
+      if (response.ok) {
+        const data = await response.json();
+        setTests(data);
+        setFilteredTests(data);
+      } else {
+        console.error('Error fetching tests:', response.statusText);
+      }
+    } catch (error) {
+      console.error('Error fetching tests:', error);
+    }
+  };
+  
+  useEffect(() => {
+    if (searchTerm) {
+      const filtered = tests.filter(test => 
+        test.title.toLowerCase().includes(searchTerm.toLowerCase()) ||
+        (test.description && test.description.toLowerCase().includes(searchTerm.toLowerCase()))
+      );
+      setFilteredTests(filtered);
+    } else {
+      setFilteredTests(tests);
+    }
+  }, [searchTerm, tests]);
+  
+  useEffect(() => {
+    fetchTests();
+  }, []);
   
   return (
     <div style={styles.container}>     
@@ -282,6 +331,113 @@ export default function LibraryPage() {
                         onClick={() => navigate('/match/create')}
                       >
                         Create Your First Set
+                      </button>
+                    </div>
+                  )}
+                </div>
+              )}
+            </div>
+          </div>
+        </div>
+
+        <div className="accordion-item" style={styles.accordionItem}>
+          <h2 className="accordion-header" id="test-heading">
+            <button className="accordion-button collapsed" type="button" data-bs-toggle="collapse" 
+                    data-bs-target="#test-collapse" aria-expanded="false" aria-controls="test-collapse"
+                    style={styles.accordionButton}>
+              <div style={styles.accordionHeaderContent}>
+                <span style={styles.accordionTitle}>Tests</span>
+                {filteredTests.length > 0 && (
+                  <span style={styles.accordionBadge}>{filteredTests.length}</span>
+                )}
+              </div>
+            </button>
+          </h2>
+          <div id="test-collapse" className="accordion-collapse collapse" aria-labelledby="test-heading" data-bs-parent="#libraryAccordion">
+            <div className="accordion-body" style={styles.accordionBody}>
+              <div style={styles.accordionHeader}>
+                <div style={styles.accordionTitleContainer} onClick={() => navigate('/test')}>
+                  <h2 style={styles.accordionSectionTitle}>Test Sets</h2>
+                  <button style={styles.viewAllButton}>View All</button>
+                </div>
+                <button 
+                  style={styles.createNewButton}
+                  onClick={() => navigate('/test/create')}
+                >
+                  <span style={styles.plusIcon}>+</span> Create New Test
+                </button>
+              </div>
+
+              {filteredTests.length > 0 ? (
+                <div style={styles.tableContainer}>
+                  <table style={styles.table}>
+                    <thead>
+                      <tr>
+                        <th style={styles.th}>Title</th>
+                        <th style={styles.th}>Description</th>
+                        <th style={styles.th}>Date Created</th>
+                        <th style={styles.th}>Actions</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      {filteredTests.map(test => (
+                        <tr key={test.id} style={styles.tableRow}>
+                          <td style={styles.titleTd}>
+                            <div style={styles.titleContainer}>
+                              <button
+                                style={styles.studyButton}
+                                onClick={() => navigate(`/test/${test.id}`)}
+                              >
+                                Study
+                              </button>
+                              <span style={styles.setTitle}>{test.title}</span>
+                            </div>
+                          </td>
+                          <td style={styles.descriptionTd}>
+                            {test.description || '—'}
+                          </td>
+                          <td style={styles.dateTd}>
+                            {formatDate(test.dateCreated)}
+                          </td>
+                          <td style={styles.actionsTd}>
+                            <div style={styles.actionsContainer}>
+                              <button 
+                                style={styles.editButton}
+                                onClick={() => navigate(`/test/update/${test.id}`)}
+                                aria-label={`Edit ${test.title}`}
+                              >
+                                ✏️
+                              </button>
+                              <button
+                                style={styles.deleteButton}
+                                onClick={() => handleDeleteTest(test.id, test.title)}
+                                aria-label={`Delete ${test.title}`}
+                              >
+                                🗑️
+                              </button>
+                            </div>
+                          </td>   
+                        </tr>
+                      ))}
+                    </tbody>
+                  </table>
+                </div>
+              ) : (
+                <div style={styles.noResultsState}>
+                  {searchTerm ? (
+                    <p style={styles.noResultsText}>
+                      No tests found matching "{searchTerm}"
+                    </p>
+                  ) : (
+                    <div style={styles.emptyState}>
+                      <p style={styles.emptyStateText}>
+                        You haven't created any tests yet
+                      </p>
+                      <button 
+                        style={styles.createEmptyButton}
+                        onClick={() => navigate('/tests/create')}
+                      >
+                        Create Your First Test
                       </button>
                     </div>
                   )}
