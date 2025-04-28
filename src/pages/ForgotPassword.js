@@ -108,57 +108,60 @@ function ForgotPassword() {
 
     return (
         <div style={styles.container}>
-            <div style={styles.titleContainer}>
+            <div style={styles.backSection}>
                 <Link to="/login" style={styles.backButton}>
                     <FiArrowLeft size={18} />
                     <span>Back to Login</span>
                 </Link>
-                <h1 style={styles.title}>Forgot Password</h1>
             </div>
+            
+            <div style={styles.contentSection}>
+                <h1 style={styles.title}>Forgot Password</h1>
 
-            {error && <div style={styles.error}>{error}</div>}
+                {error && <div style={styles.error}>{error}</div>}
 
-            {step === 1 && (
-                <form style={styles.form} onSubmit={handleUsernameSubmit}>
-                    <label style={styles.label}>
-                        Username
-                        <input name="username" type="text" required style={styles.input} />
-                    </label>
-                    <button type="submit" style={styles.submit}>Next</button>
-                </form>
-            )}
+                {step === 1 && (
+                    <form style={styles.form} onSubmit={handleUsernameSubmit}>
+                        <label style={styles.label}>
+                            Username
+                            <input name="username" type="text" required style={styles.input} />
+                        </label>
+                        <button type="submit" style={styles.submit}>Next</button>
+                    </form>
+                )}
 
-            {step === 2 && user && (
-                <form style={styles.form} onSubmit={handleAnswerSubmit}>
-                    <label style={styles.label}>
-                        {user.securityQuestion}
-                        <input
-                            type="text"
-                            value={answer}
-                            onChange={e => setAnswer(e.target.value)}
-                            required
-                            style={styles.input}
-                        />
-                    </label>
-                    <button type="submit" style={styles.submit}>Verify</button>
-                </form>
-            )}
+                {step === 2 && user && (
+                    <form style={styles.form} onSubmit={handleAnswerSubmit}>
+                        <label style={styles.label}>
+                            {user.securityQuestion}
+                            <input
+                                type="text"
+                                value={answer}
+                                onChange={e => setAnswer(e.target.value)}
+                                required
+                                style={styles.input}
+                            />
+                        </label>
+                        <button type="submit" style={styles.submit}>Verify</button>
+                    </form>
+                )}
 
-            {step === 3 && (
-                <form style={styles.form} onSubmit={handlePasswordReset}>
-                    <label style={styles.label}>
-                        New Password
-                        <input
-                            type="password"
-                            value={newPassword}
-                            onChange={e => setNewPassword(e.target.value)}
-                            required
-                            style={styles.input}
-                        />
-                    </label>
-                    <button type="submit" style={styles.submit}>Reset Password</button>
-                </form>
-            )}
+                {step === 3 && (
+                    <form style={styles.form} onSubmit={handlePasswordReset}>
+                        <label style={styles.label}>
+                            New Password
+                            <input
+                                type="password"
+                                value={newPassword}
+                                onChange={e => setNewPassword(e.target.value)}
+                                required
+                                style={styles.input}
+                            />
+                        </label>
+                        <button type="submit" style={styles.submit}>Reset Password</button>
+                    </form>
+                )}
+            </div>
         </div>
     );
 }
@@ -169,19 +172,19 @@ const styles = {
         display: 'flex',
         flexDirection: 'column',
         alignItems: 'center',
-        padding: '2rem 1rem',
-        color: COLORS.darkBlue
-    },
-    titleContainer: {
-        display: 'flex',
-        alignItems: 'center',
-        position: 'relative',
+        padding: '1rem',
+        color: COLORS.darkBlue,
         width: '100%',
-        maxWidth: '400px',
-        marginBottom: '1.5rem'
+        maxWidth: '480px',
+        margin: '0 auto'
+    },
+    backSection: {
+        width: '100%',
+        marginBottom: '1.5rem',
+        paddingLeft: '0.5rem'
     },
     backButton: {
-        display: 'flex',
+        display: 'inline-flex',
         alignItems: 'center',
         gap: '0.5rem',
         backgroundColor: 'transparent',
@@ -191,13 +194,20 @@ const styles = {
         borderRadius: '4px',
         cursor: 'pointer',
         textDecoration: 'none',
-        position: 'absolute',
-        left: 0
+        fontSize: '0.9rem'
+    },
+    contentSection: {
+        display: 'flex',
+        flexDirection: 'column',
+        alignItems: 'center',
+        width: '100%'
     },
     title: {
         fontSize: '2rem',
         color: COLORS.teal,
-        margin: '0 auto'
+        marginTop: 0,
+        marginBottom: '1.5rem',
+        textAlign: 'center'
     },
     form: {
         width: '100%',
@@ -208,14 +218,17 @@ const styles = {
     },
     label: {
         display: 'flex',
-        flexDirection: 'column'
+        flexDirection: 'column',
+        width: '100%',
+        fontSize: '1rem'
     },
     input: {
         marginTop: '0.5rem',
         padding: '0.75rem',
         fontSize: '1rem',
         border: `1px solid ${COLORS.lightMint}`,
-        borderRadius: '4px'
+        borderRadius: '4px',
+        width: '100%'
     },
     submit: {
         backgroundColor: COLORS.darkBlue,
@@ -225,7 +238,8 @@ const styles = {
         borderRadius: '4px',
         cursor: 'pointer',
         fontSize: '1rem',
-        marginTop: '0.5rem'
+        marginTop: '0.5rem',
+        width: '100%'
     },
     error: {
         backgroundColor: '#ffebee',
