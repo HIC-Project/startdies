@@ -1,16 +1,28 @@
-// src/pages/MatchCreate.js
-import React, { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+// src/pages/FlashcardEdit.js
+import React, { useState, useEffect } from 'react';
+import { useNavigate, useParams } from 'react-router-dom';
 import { COLORS } from '../../themes';
 import useFlashcardsSets from '../../hooks/useFlashcardsSets';
 
-export default function FlashcardsCreate() {
-  const { addFlashcardSet } = useFlashcardsSets();
+export default function FlashcardEdit() {
+  const { id } = useParams();
+  const { flashcardSets, editFlashcardSet } = useFlashcardsSets();
   const navigate = useNavigate();
 
   const [title, setTitle] = useState('');
   const [description, setDescription] = useState('');
   const [pairs, setPairs] = useState([{ term: '', def: '' }]);
+
+  useEffect(() => {
+    const currentSet = flashcardSets.find(set => set.id === id);
+    if (currentSet) {
+      setTitle(currentSet.title);
+      setDescription(currentSet.description);
+      setPairs(currentSet.pairs);
+    } else {
+      navigate('/flashcards');
+    }
+  }, [id, flashcardSets, navigate]);
 
   const updatePair = (idx, field, value) => {
     const copy = [...pairs];
@@ -25,38 +37,24 @@ export default function FlashcardsCreate() {
 
   const handleSubmit = e => {
     e.preventDefault();
-    addFlashcardSet({ title, description, pairs });
+    editFlashcardSet(id, title, description, pairs);
     navigate('/flashcards');
-  };
-
-  const autoPopulate = () => {
-    // Example data for auto-population
-    setTitle("Sample Flashcards Set");
-    setDescription("This is an example description for the flashcard set.");
-    setPairs([
-      { term: 'Term 1', def: 'Definition 1' },
-      { term: 'Term 2', def: 'Definition 2' },
-      { term: 'Term 3', def: 'Definition 3' }
-    ]);
   };
 
   return (
     <div style={styles.container}>
-      <div style={styles.headerContainer}>
+      <div style={styles.topBar}>
         <button onClick={() => navigate(-1)} style={styles.backButton}>
           <span style={styles.backArrow}>←</span> Back
         </button>
-        <h1 style={styles.header}>Create Flashcards Set</h1>
+      </div>
+
+      <div style={styles.header}>
+        <h1 style={styles.headerText}>Edit Flashcards Set</h1>
+        <p style={styles.subtitle}>Update your flashcard set details below</p>
       </div>
 
       <div style={styles.formContainer}>
-        <div style={styles.formHeader}>
-          <p style={styles.formSubtitle}>Create a new set of flashcards for studying</p>
-          <button onClick={autoPopulate} style={styles.autoPopulateBtn}>
-            Auto Populate
-          </button>
-        </div>
-
         <form onSubmit={handleSubmit} style={styles.form}>
           <div style={styles.inputGroup}>
             <label style={styles.label}>
@@ -97,6 +95,7 @@ export default function FlashcardsCreate() {
                       onClick={() => removePair(i)}
                       style={styles.removePairBtn}
                       aria-label="Remove card"
+                      disabled={pairs.length === 1}
                     >
                       ✕
                     </button>
@@ -128,9 +127,14 @@ export default function FlashcardsCreate() {
             </button>
           </div>
 
-          <button type="submit" style={styles.submitBtn}>
-            Save Flashcard Set
-          </button>
+          <div style={styles.formActions}>
+            <button type="button" onClick={() => navigate('/flashcards')} style={styles.cancelBtn}>
+              Cancel
+            </button>
+            <button type="submit" style={styles.submitBtn}>
+              Save Changes
+            </button>
+          </div>
         </form>
       </div>
     </div>
@@ -147,25 +151,13 @@ const styles = {
     backgroundColor: '#f9f9f9',
     minHeight: '100vh',
   },
-  headerContainer: {
+  topBar: {
     display: 'flex',
-    flexDirection: 'column',
+    justifyContent: 'space-between',
     alignItems: 'center',
     marginBottom: '2rem',
-    position: 'relative',
-    width: '100%',
-  },
-  header: {
-    fontSize: '2.5rem',
-    color: COLORS.teal,
-    marginBottom: '0.5rem',
-    textAlign: 'center',
-    fontWeight: '600',
   },
   backButton: {
-    position: 'absolute',
-    top: '0.5rem',
-    left: '0',
     backgroundColor: 'transparent',
     color: COLORS.darkBlue,
     padding: '0.5rem',
@@ -182,22 +174,26 @@ const styles = {
     fontSize: '1.2rem',
     marginRight: '0.25rem',
   },
+  header: {
+    marginBottom: '2rem',
+    textAlign: 'center',
+  },
+  headerText: {
+    fontSize: '2.5rem',
+    color: COLORS.teal,
+    margin: '0 0 0.5rem 0',
+    fontWeight: '600',
+  },
+  subtitle: {
+    color: '#666',
+    fontSize: '1.1rem',
+    margin: '0',
+  },
   formContainer: {
     backgroundColor: 'white',
     borderRadius: '12px',
     padding: '2rem',
     boxShadow: '0 4px 12px rgba(0, 0, 0, 0.05)',
-  },
-  formHeader: {
-    display: 'flex',
-    justifyContent: 'space-between',
-    alignItems: 'center',
-    marginBottom: '1.5rem',
-  },
-  formSubtitle: {
-    color: '#666',
-    margin: '0',
-    fontSize: '1.1rem',
   },
   form: {
     display: 'flex',
@@ -299,17 +295,6 @@ const styles = {
     width: '26px',
     height: '26px',
   },
-  autoPopulateBtn: {
-    backgroundColor: COLORS.lightMint,
-    color: COLORS.darkBlue,
-    border: 'none',
-    padding: '0.5rem 1rem',
-    borderRadius: '6px',
-    cursor: 'pointer',
-    fontWeight: '500',
-    transition: 'all 0.2s ease',
-    fontSize: '0.9rem',
-  },
   addPairBtn: {
     backgroundColor: 'transparent',
     color: COLORS.teal,
@@ -330,6 +315,24 @@ const styles = {
     fontSize: '1.2rem',
     fontWeight: 'bold',
   },
+  formActions: {
+    display: 'flex',
+    justifyContent: 'space-between',
+    gap: '1rem',
+    marginTop: '1rem',
+  },
+  cancelBtn: {
+    backgroundColor: '#f0f0f0',
+    color: '#555',
+    padding: '1rem',
+    border: 'none',
+    borderRadius: '8px',
+    cursor: 'pointer',
+    fontWeight: '600',
+    fontSize: '1rem',
+    transition: 'all 0.2s ease',
+    flex: 1,
+  },
   submitBtn: {
     backgroundColor: COLORS.darkBlue,
     color: '#fff',
@@ -338,9 +341,8 @@ const styles = {
     borderRadius: '8px',
     cursor: 'pointer',
     fontWeight: '600',
-    fontSize: '1.1rem',
-    marginTop: '1rem',
+    fontSize: '1rem',
     transition: 'all 0.2s ease',
-    width: '100%',
+    flex: 2,
   },
-};
+ };

@@ -18,6 +18,7 @@ import Subscriptions from './pages/SubscriptionPage';
 import FlashcardHome from './pages/Flashcards/FlashcardHome';
 import FlashcardCreate from './pages/Flashcards/FlashcardCreate';
 import FlashcardExample from './pages/Flashcards/FlashcardExample';
+import FlashcardEdit from './pages/Flashcards/FlashcardEdit';
 
 import MatchHome from './pages/Match/MatchHome';
 import MatchExample from './pages/Match/MatchExample';
@@ -50,9 +51,10 @@ function App() {
 
             {/* Flashcards */}
             <Route path="/flashcards">
-              <Route index element={<FlashcardHome />} />
-              <Route path="create" element={<FlashcardCreate />} />
-              <Route path="example" element={<FlashcardExample />} />
+                <Route index element={<FlashcardHome/>}/>
+                <Route path="create" element={<FlashcardCreate/>}/>
+                <Route path="example/:id" element={<FlashcardExample/>}/>
+                <Route path="/flashcards/edit/:id" element={<FlashcardEdit />} />
             </Route>
 
             {/* Match */}
