@@ -321,3 +321,76 @@
   .backToTestListBtn:hover {
     background-color: #e0e0e0;
   }
+
+  .hasError .label {
+    color: #e53935;
+  }
+  
+  .errorInput {
+    border: 2px solid #e53935 !important;
+    background-color: rgba(229, 57, 53, 0.05);
+  }
+  
+  .errorText {
+    color: #e53935;
+    font-size: 0.8rem;
+    margin-top: 4px;
+    font-weight: 500;
+  }
+  
+  .optionError {
+    margin-left: 24px; /* Align with option input */
+  }
+  
+  /* Form message styles */
+  .formMessage {
+    padding: 12px 16px;
+    border-radius: 8px;
+    margin-bottom: 20px;
+    font-weight: 500;
+    display: flex;
+    align-items: center;
+    animation: fadeIn 0.3s ease-in-out;
+  }
+  
+  .formMessage.error {
+    background-color: rgba(229, 57, 53, 0.1);
+    color: #e53935;
+    border-left: 4px solid #e53935;
+  }
+  
+  .formMessage.success {
+    background-color: rgba(76, 175, 80, 0.1);
+    color: #43a047;
+    border-left: 4px solid #43a047;
+  }
+  
+  /* Animation for form messages */
+  @keyframes fadeIn {
+    from {
+      opacity: 0;
+      transform: translateY(-10px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+  
+  /* Add subtle transitions to inputs */
+  .input, .textarea, .optionInput {
+    transition: border-color 0.2s ease, background-color 0.2s ease;
+  }
+  
+  /* Focus states */
+  .input:focus, .textarea:focus, .optionInput:focus {
+    border-color: #009688;
+    box-shadow: 0 0 0 2px rgba(0, 150, 136, 0.2);
+    outline: none;
+  }
+  
+  /* Error focus state */
+  .errorInput:focus {
+    border-color: #e53935 !important;
+    box-shadow: 0 0 0 2px rgba(229, 57, 53, 0.2) !important;
+  }
