@@ -1,37 +1,51 @@
-// src/pages/MatchCreate.js
-import React, {useState} from 'react';
-import {useNavigate, Link} from 'react-router-dom';
+// src/pages/MatchEdit.js
+import React, { useState, useEffect } from 'react';
+import { useNavigate, useParams, Link } from 'react-router-dom';
 import useStudySets from '../../hooks/useStudySets';
-import {COLORS} from '../../themes';
-import {FiArrowLeft} from 'react-icons/fi';
+import { COLORS } from '../../themes';
+import { FiArrowLeft } from 'react-icons/fi';
 
-export default function MatchCreate()
-{
-    const {addSet} = useStudySets();
-    const nav = useNavigate();
+export default function MatchEdit() {
+    const { id } = useParams();
+    const { sets, updateSet } = useStudySets();
+    const navigate = useNavigate();
 
     const [title, setTitle] = useState('');
-    const [pairs, setPairs] = useState([{term: '', def: ''}]);
+    const [pairs, setPairs] = useState([{ term: '', def: '' }]);
+    const [loading, setLoading] = useState(true);
 
-    const updatePair = (idx, field, value) =>
-    {
+    // Load the existing set data
+    useEffect(() => {
+        const currentSet = sets.find(s => s.id === id);
+        if (currentSet) {
+            setTitle(currentSet.title);
+            // Ensure we have at least the pairs from the original set
+            setPairs(currentSet.pairs.length > 0 ? [...currentSet.pairs] : [{ term: '', def: '' }]);
+        }
+        setLoading(false);
+    }, [id, sets]);
+
+    const updatePair = (idx, field, value) => {
         const copy = [...pairs];
         copy[idx][field] = value;
         setPairs(copy);
     };
 
-    const addPair = () => setPairs([...pairs, {term: '', def: ''}]);
-    const removePair = idx =>
-    {
+    const addPair = () => setPairs([...pairs, { term: '', def: '' }]);
+    
+    const removePair = idx => {
         setPairs(pairs.filter((_, i) => i !== idx));
     };
 
-    const handleSubmit = e =>
-    {
+    const handleSubmit = e => {
         e.preventDefault();
-        addSet({title, pairs});
-        nav('/match');
+        updateSet(id, { title, pairs });
+        navigate('/match');
     };
+
+    if (loading) {
+        return <div style={styles.container}>Loading...</div>;
+    }
 
     return (
         <div style={styles.container}>
@@ -40,7 +54,7 @@ export default function MatchCreate()
                     <FiArrowLeft size={18} />
                     <span>Back</span>
                 </Link>
-                <h1 style={styles.header}>Create Match Set</h1>
+                <h1 style={styles.header}>Edit Match Set</h1>
             </div>
             <form onSubmit={handleSubmit} style={styles.form}>
                 <label style={styles.label}>
@@ -87,7 +101,7 @@ export default function MatchCreate()
                 </button>
 
                 <button type="submit" style={styles.submitBtn}>
-                    Save Set
+                    Update Set
                 </button>
             </form>
         </div>
@@ -95,7 +109,7 @@ export default function MatchCreate()
 }
 
 const styles = {
-    container: {padding: '2rem'},
+    container: { padding: '2rem' },
     titleContainer: {
         display: 'flex',
         alignItems: 'center',
@@ -120,8 +134,8 @@ const styles = {
         cursor: 'pointer',
         textDecoration: 'none'
     },
-    form: {maxWidth: '600px', margin: '0 auto', display: 'flex', flexDirection: 'column', gap: '1rem'},
-    label: {display: 'flex', flexDirection: 'column', fontSize: '1rem'},
+    form: { maxWidth: '600px', margin: '0 auto', display: 'flex', flexDirection: 'column', gap: '1rem' },
+    label: { display: 'flex', flexDirection: 'column', fontSize: '1rem' },
     input: {
         padding: '0.5rem',
         fontSize: '1rem',
@@ -130,7 +144,7 @@ const styles = {
         marginTop: '0.25rem',
         flex: 1
     },
-    pairRow: {display: 'flex', gap: '0.5rem'},
+    pairRow: { display: 'flex', gap: '0.5rem' },
     removePairBtn: {
         background: 'transparent',
         border: 'none',

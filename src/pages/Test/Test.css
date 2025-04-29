@@ -1,0 +1,317 @@
+.container {
+    max-width: 900px;
+    margin: 0 auto;
+    padding: 2rem 1rem;
+  }
+  
+  .loading {
+    padding: 2rem;
+    text-align: center;
+    font-size: 1.2rem;
+    color: #2A787A;
+  }
+  
+  .error {
+    padding: 2rem;
+    text-align: center;
+    color: #e74c3c;
+  }
+  
+  .testHeader {
+    margin-bottom: 2rem;
+  }
+  
+  .testTitle {
+    font-size: 1.5rem;
+    font-weight: 700;
+    color: #163950;
+    margin-bottom: 1rem;
+  }
+  
+  .timer {
+    font-size: 1.1rem;
+    margin-bottom: 1.5rem;
+    font-weight: 600;
+  }
+  
+  .timerWarning {
+    color: #e74c3c;
+  }
+  
+  .progress {
+    margin-bottom: 1rem;
+  }
+  
+  .progressBar {
+    height: 8px;
+    background-color: #eaeaea;
+    border-radius: 4px;
+    margin-top: 8px;
+    overflow: hidden;
+  }
+  
+  .progressFill {
+    height: 100%;
+    background-color: #53CA97;
+    transition: width 0.3s ease;
+  }
+  
+  .questionCard {
+    background-color: #fff;
+    border-radius: 8px;
+    box-shadow: 0 2px 12px rgba(0, 0, 0, 0.1);
+    padding: 2rem;
+    margin-bottom: 2rem;
+    border: 1px solid #C7F0CC;
+  }
+  
+  .questionText {
+    font-size: 1.2rem;
+    font-weight: 600;
+    color: #163950;
+    margin-bottom: 2rem;
+  }
+  
+  .options {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+    margin-bottom: 2rem;
+  }
+  
+  .option {
+    display: flex;
+    align-items: center;
+    padding: 1rem;
+    border-radius: 8px;
+    border: 1px solid #eaeaea;
+    cursor: pointer;
+    transition: all 0.2s;
+    background-color: #f9f9f9;
+  }
+  
+  .selectedOption {
+    background-color: #C7F0CC;
+    border-color: #53CA97;
+  }
+  
+  .optionCircle {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 36px;
+    height: 36px;
+    border-radius: 50%;
+    background-color: #fff;
+    border: 1px solid #ddd;
+    margin-right: 1rem;
+    font-weight: 600;
+    color: #163950;
+  }
+  
+  .optionText {
+    flex: 1;
+  }
+  
+  .navigation {
+    display: flex;
+    justify-content: space-between;
+  }
+  
+  .prevBtn {
+    padding: 0.75rem 1.5rem;
+    background-color: #f5f5f5;
+    color: #163950;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    cursor: pointer;
+  }
+  
+  .nextBtn {
+    padding: 0.75rem 1.5rem;
+    background-color: #2A787A;
+    color: #fff;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+  }
+  
+  .finishBtn {
+    padding: 0.75rem 1.5rem;
+    background-color: #53CA97;
+    color: #fff;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+  }
+  
+  .questionDots {
+    display: flex;
+    justify-content: center;
+    gap: 8px;
+    margin-top: 1rem;
+  }
+  
+  .dot {
+    width: 12px;
+    height: 12px;
+    border-radius: 50%;
+    cursor: pointer;
+  }
+  
+  .resultCard {
+    background-color: #fff;
+    border-radius: 8px;
+    box-shadow: 0 2px 12px rgba(0, 0, 0, 0.1);
+    padding: 2.5rem;
+    border: 1px solid #C7F0CC;
+  }
+  
+  .resultTitle {
+    font-size: 1.8rem;
+    font-weight: 700;
+    color: #163950;
+    text-align: center;
+    margin-bottom: 2rem;
+  }
+  
+  .scoreDisplay {
+    display: flex;
+    justify-content: center;
+    margin-bottom: 2rem;
+  }
+  
+  .scoreCircle {
+    width: 150px;
+    height: 150px;
+    border-radius: 50%;
+    background-color: #C7F0CC;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border: 8px solid #53CA97;
+  }
+  
+  .scorePercentage {
+    font-size: 2.5rem;
+    font-weight: 700;
+    color: #163950;
+  }
+  
+  .resultDetails {
+    margin-bottom: 2rem;
+    font-size: 1.1rem;
+    text-align: center;
+  }
+  
+  .resultAnalysis {
+    margin: 1.5rem 0;
+    padding: 1rem;
+    background-color: #f9f9f9;
+    border-radius: 8px;
+  }
+  
+  .excellentResult {
+    color: #27ae60;
+    font-weight: 600;
+  }
+  
+  .goodResult {
+    color: #f39c12;
+    font-weight: 600;
+  }
+  
+  .needsWorkResult {
+    color: #e74c3c;
+    font-weight: 600;
+  }
+  
+  .questionReview {
+    margin-top: 2rem;
+    text-align: left;
+  }
+  
+  .reviewQuestion {
+    padding: 1rem;
+    border-radius: 8px;
+    margin-bottom: 1rem;
+  }
+  
+  .questionNumber {
+    font-weight: 700;
+  }
+  
+  .reviewQuestionText {
+    font-weight: 600;
+    margin-bottom: 0.5rem;
+  }
+  
+  .reviewAnswer {
+    margin-bottom: 0.25rem;
+  }
+  
+  .correctAnswer {
+    color: #27ae60;
+    font-weight: 500;
+  }
+  
+  .resultActions {
+    display: flex;
+    justify-content: center;
+    gap: 1rem;
+    margin-top: 2rem;
+  }
+  
+  .retakeBtn {
+    padding: 0.75rem 1.5rem;
+    background-color: #2A787A;
+    color: #fff;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    font-weight: 600;
+  }
+  
+  .returnBtn {
+    padding: 0.75rem 1.5rem;
+    background-color: #f5f5f5;
+    color: #163950;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    cursor: pointer;
+    font-weight: 600;
+  }
+  
+  /* Review Question background for correct and wrong */
+.correctAnswer {
+    background-color: rgba(83, 202, 151, 0.1); /* Light Green background */
+    border-left: 4px solid #53CA97;
+    padding: 1rem;
+    border-radius: 8px;
+    margin-bottom: 1rem;
+  }
+  
+  .wrongAnswer {
+    background-color: rgba(231, 76, 60, 0.1); /* Light Red background */
+    border-left: 4px solid #e74c3c;
+    padding: 1rem;
+    border-radius: 8px;
+    margin-bottom: 1rem;
+  }
+  
+  /* Your answer text styling */
+  .reviewAnswer span {
+    font-weight: 600;
+  }
+  
+  /* Correct answer text (when user answered wrong) */
+  .correctAnswer span {
+    color: #27ae60;
+    font-weight: 600;
+  }
+  
+  /* Your answer wrong styling */
+  .wrongAnswer span {
+    color: #e74c3c;
+    font-weight: 600;
+  }
