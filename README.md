@@ -1,5 +1,7 @@
 # StartDies
 
+![StartDies Logo](src/assets/mainLogo.svg)
+
 ---
 
 ## 🚀 Overview
@@ -25,19 +27,18 @@ StartDies is a modern educational study application designed to help learners of
 
    ```bash
    npm install
-   npm install bootstrap
-   npm install express
+   npm install bootstrap express
    ```
 
-3. **Start the development server**
- 
+3. **Start the development servers**
+
    ```bash
-   #terminal 1:
-   node sever.js
+   # Terminal 1: Start the Express server
+   node server.js
    ```
 
    ```bash
-   #terminal 2:
+   # Terminal 2: Start the React development server
    npm start
    ```
 
@@ -45,8 +46,8 @@ StartDies is a modern educational study application designed to help learners of
 
    Frontend: [http://localhost:3000](http://localhost:3000)  
    Backend: [http://localhost:5050](http://localhost:5050)
-   
-6. **Build for production**
+
+5. **Build for production**
 
    ```bash
    npm run build
@@ -57,4 +58,3 @@ StartDies is a modern educational study application designed to help learners of
 This project is licensed under the MIT License. See the [LICENSE](LICENSE) file for details.
 
 Happy studying! 🎓
-
